@@ -1,41 +1,41 @@
 import { useState,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { register,reset} from "../store/auth";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import { register,reset} from "../features/auth";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function Register() {
   const dispatch = useDispatch();
-  const router = useRouter();
+  const navigate = useNavigate();
   const initUser = {
     name: "",
     email: "",
     password: "",
     birth_date: "",
   };
-  const [user, setUser] = useState(initUser);
+  const [userForm, setUserForm] = useState(initUser);
   const loading = useSelector((state) => state.entities.auth.isLoading);
   const error = useSelector((state) => state.entities.auth.isError);
   const success = useSelector((state) => state.entities.auth.isSuccess);
   const message = useSelector((state) => state.entities.auth.message);
-  const userData = useSelector((state) => state.entities.auth.user);
+  const user = useSelector((state) => state.entities.auth.user);
 
   useEffect(() => {
     if (error) toast.error(message);
-    if (success || userData) router.push("/");
+    if (success || user)   navigate("/");
+
     dispatch(reset());
-  }, [userData, error, success, message, router, dispatch]);
+  }, [user, error, success, message, navigate, dispatch]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(register(user));
-    setUser(initUser);
+    dispatch(register(userForm));
+    setUserForm(initUser);
   };
 
   const handleInputChange = (event) => {
-    setUser({
-      ...user,
+    setUserForm({
+      ...userForm,
       [event.target.name]: event.target.value,
     });
   };
@@ -56,7 +56,7 @@ export default function Register() {
             <input
               type="text"
               name="name"
-              value={user.name}
+              value={userForm.name}
               onChange={handleInputChange}
               id="registerName"
               className="form-control"
@@ -70,7 +70,7 @@ export default function Register() {
             <input
               type="email"
               name="email"
-              value={user.email}
+              value={userForm.email}
               onChange={handleInputChange}
               id="registerEmail"
               className="form-control"
@@ -83,7 +83,7 @@ export default function Register() {
             </label>
             <input
               name="password"
-              value={user.password}
+              value={userForm.password}
               onChange={handleInputChange}
               type="password"
               id="registerPassword"
@@ -104,7 +104,7 @@ export default function Register() {
               type="date"
               className="form-control"
               name="birth_date"
-              value={user.birth_date}
+              value={userForm.birth_date}
               onChange={handleInputChange}
               placeholder="YYYY-MM-DD"
               required
@@ -115,7 +115,7 @@ export default function Register() {
           </button>
         </form>
         <p>
-          Have an Account? <Link href="/login">Login</Link>
+          Have an Account? <Link to="/login">Login</Link>
         </p>
       </div>
     </div>

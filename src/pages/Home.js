@@ -1,27 +1,28 @@
-import { useRouter } from "next/router";
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import ChatLog from "@/src/components/chatlog";
-import Users from "@/components/users";
-import Search from "@/components/search";
-import Navbar from "@/components/navbar";
-import { reset } from "@/store/auth";
+import ChatLog from "../components/Chatlog";
+// import Users from "../components/Users";
+import Search from "../components/Search";
+import Navbar from "../components/Navbar";
+import { reset } from "../features/auth";
 
-export default function Home(props) {
+export default function Home() {
   const [input, setInput] = useState("");
   const [chatLog, setChatLog] = useState([]);
-  const user = props.user;
+  
   const dispatch = useDispatch();
-  const router = useRouter();
+  const user = useSelector((state) => state.entities.auth.user);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!user) {
-      router.push("/login");
+      navigate("/login");
     }
     return () => {
       dispatch(reset());
     };
-  }, [user, router, dispatch]);
+  }, [user, navigate, dispatch]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -63,16 +64,4 @@ export default function Home(props) {
       </section>
     </div>
   );
-}
-
-// export async function getStaticProps(context) {
-//   const user = useSelector((state) => state.entities.auth.user);
-//   return { props: { user } };
-// }
-
-export async function getServerSideProps(context) {
-  const user = useSelector((state) => state.entities.auth.user);
-  return {
-    props: { user },
-  };
 }

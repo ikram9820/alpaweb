@@ -1,16 +1,17 @@
 import classes from "./navbar.module.css";
-import Search from "./search";
+import Search from "./Search";
 import { useDispatch, useSelector } from "react-redux";
-import Link from "next/link";
-import { logout,reset } from "@/store/auth";
-import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { logout, reset } from "../features/auth";
 
-export default function Navbar({user}) {
-  const dispatch = useDispatch()
-
-  function userLogout(){
-    dispatch(logout())
+export default function Navbar() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.entities.auth.user);
+  const navigate = useNavigate();
+  function userLogout() {
+    dispatch(logout());
     dispatch(reset());
+    navigate("login");
   }
 
   return (
@@ -19,20 +20,24 @@ export default function Navbar({user}) {
       <div className="d-flex">
         {user && <h6 className="p-2">map</h6>}
         {user && <h6 className="p-2">setting</h6>}
-        {user && <h6 onClick={userLogout}  className="p-2">Logout</h6>}
         {user && (
-          <Link href="/profile" className="p-2">
+          <h6 onClick={userLogout} className="p-2">
+            Logout
+          </h6>
+        )}
+        {user && (
+          <Link to="/profile" className="p-2">
             profile
           </Link>
         )}
 
         {!user && (
-          <Link href="/login" className="p-2">
+          <Link to="/login" className="p-2">
             Login
           </Link>
         )}
         {!user && (
-          <Link href="/register" className="p-2">
+          <Link to="/register" className="p-2">
             Register
           </Link>
         )}
@@ -40,19 +45,3 @@ export default function Navbar({user}) {
     </div>
   );
 }
-
-export async function getStaticProps(context) {
-  const user = useSelector((state) => state.entities.auth.user);
-  return { props: { user } };
-}
-
-// export async function getServerSideProps(context) {
-//   const user = useSelector((state) => state.entities.auth.user);
-//   if (!user) {
-//     return { notFound: true };
-//   }
-
-//   return {
-//     props: { user  },
-//   };
-// }
