@@ -1,10 +1,12 @@
 import Navbar from "../components/Navbar";
 
-export default function Profile() {
+function Setting() {
   return (
     <div>
       <Navbar />
-      <h1>Hi it is my Profile</h1>
+      <h2> Setting</h2>
     </div>
   );
 }
+
+export default Setting;

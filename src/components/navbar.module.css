@@ -6,3 +6,27 @@
     padding: 8px;
 }
 
+.logo{
+    color: white;
+    padding: 14px;
+    font-size: larger;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navItems{
+    margin-top: 16px;
+}
+.navItems a{
+   color: white;
+   padding-right: 10px;
+   text-decoration: none;
+   font-weight: 600;
+}
+
+.navItems a:hover{
+  color: gray;
+}
+.navItems a:active{
+  color: gray;
+}

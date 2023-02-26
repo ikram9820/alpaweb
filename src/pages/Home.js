@@ -3,10 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import ChatLog from "../components/Chatlog";
 // import Users from "../components/Users";
-import Search from "../components/Search";
-import Navbar from "../components/Navbar";
 import { reset } from "../features/auth";
-
+import Navbar from '../components/Navbar'
+import Search from '../components/Search';
 export default function Home() {
   const [input, setInput] = useState("");
   const [chatLog, setChatLog] = useState([]);
@@ -32,23 +31,23 @@ export default function Home() {
   }
 
   return (
-    <div className="App">
-      <aside className="asidemenu">
-        <div className="sidemenubutton">
-          <span>+</span>
-          Create New Group
-        </div>
+    <div className='App'>
+     <aside className="asidemenu">
+      <div className="sidemenubutton">
+        <span>+</span>
+        Create New Group
+      </div>
 
-        <Search />
-        {/* <Models
-          models={models}
-          currentModel={currentModel}
-          onModelChange={(e) => setCurrentModel(e.target.value)}
-        /> */}
-      </aside>
+      <Search />
+      {/* <Models
+      models={models}
+      currentModel={currentModel}
+      onModelChange={(e) => setCurrentModel(e.target.value)}
+    /> */}
+    </aside>
       <section className="chatbox">
-        <Navbar />
-
+       <Navbar/>
+ 
         <ChatLog chatLog={chatLog} />
 
         <div className="chat-input-holder">
