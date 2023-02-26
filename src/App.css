@@ -1,39 +1,120 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-float infinite 3s ease-in-out;
-  }
-}
-
-.App-header {
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  background-color: #282c34;
+  color: white;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
 }
 
-.App-link {
-  color: rgb(112, 76, 182);
+.asidemenu {
+  width: 260px;
+  padding: 8px;
+  background-color: #202123;
 }
 
-@keyframes App-logo-float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+.sidemenubutton {
+  padding: 8px;
+  border: 1px solid gray;
+  margin-top: 8px;
+  margin-bottom: 8px;
+
+  border-radius: 5px;
+  text-align: left;
+  transition: ease 0.25s;
+}
+
+.sidemenubutton:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidemenubutton span {
+  padding-left: 6px;
+  font-weight: bolder;
+  padding-right: 12px;
+
+}
+
+
+.users {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.users select {
+  width: 100%;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 1.25em;
+  outline: none;
+}
+
+.chatbox {
+  flex: 1;
+  background-color: #343541;
+  position: relative;
+}
+
+.chat-input-holder {
+  padding: 24px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.chat-input {
+  background-color: #40414f;
+  width: 90%;
+  padding: 12px;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  font-size: 1.25em;
+  outline: none;
+  box-shadow: 0 0 8px 0, rgba(0, 0, 0, 0.25);
+}
+
+
+.chat-log {
+  text-align: left;
+  height: 85vh;
+  overflow-y: scroll;
+}
+
+.chat-message.chatgpt {
+  background-color: #444654;
+}
+
+.chat-message-center {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+
+  padding: 12px;
+  display: flex;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.avatar {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  background: white;
+}
+
+.avatar.chatgpt img {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  background: green;
+}
+
+.message {
+  padding-left: 40px;
+  padding-right: 40px;
 }
