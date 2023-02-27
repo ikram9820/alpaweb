@@ -1,8 +1,7 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { register,reset} from "../features/auth";
+import { register, reset } from "../features/auth";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -14,15 +13,13 @@ export default function Register() {
     birth_date: "",
   };
   const [userForm, setUserForm] = useState(initUser);
-  const loading = useSelector((state) => state.entities.auth.isLoading);
   const error = useSelector((state) => state.entities.auth.isError);
   const success = useSelector((state) => state.entities.auth.isSuccess);
   const message = useSelector((state) => state.entities.auth.message);
   const user = useSelector((state) => state.entities.auth.user);
 
   useEffect(() => {
-    if (error) toast.error(message);
-    if (success || user)   navigate("/");
+    if (success || user) navigate("/");
 
     dispatch(reset());
   }, [user, error, success, message, navigate, dispatch]);
@@ -40,11 +37,9 @@ export default function Register() {
     });
   };
 
-  if(loading) toast.info("please wait")
 
   return (
     <div className="row bg-dark text-white vh-100">
-      
       <div className="col-md-6 offset-md-3  mt-5">
         <form onSubmit={handleSubmit}>
           <p className="text-center">Sign up</p>

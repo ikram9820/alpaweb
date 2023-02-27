@@ -16,10 +16,12 @@ function Navbar() {
 
   return (
     <div className={classes.nav}>
-    <div className="d-flex">
-      <Link className={classes.logo} to='/'>ALPA</Link>
-      <Search />
-    </div>
+      <div className="d-flex">
+        <Link className={classes.logo} to="/">
+          ALPA
+        </Link>
+        <Search />
+      </div>
       <div className={classes.navItems}>
         {user && <Link to="/map">Map</Link>}
         {user && <Link to="/setting">Setting</Link>}

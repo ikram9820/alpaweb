@@ -2,7 +2,7 @@ import Navbar from "../components/Navbar";
 
 function Setting() {
   return (
-    <div>
+    <div className="container">
       <Navbar />
       <h2> Setting</h2>
     </div>

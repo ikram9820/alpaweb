@@ -13,7 +13,7 @@ function App() {
   return (
     <>
       <Router>
-        <div>
+        <div className="bg-dark vh-100 text-white ">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
