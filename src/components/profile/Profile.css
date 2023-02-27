@@ -1,0 +1,26 @@
+.profile {
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  display: flex;
+}
+
+.user-instance-1 {
+  width: 70%;
+  margin-bottom: 23px;
+  margin-left: 46px;
+}
+
+.line {
+  width: 1150px;
+  height: 1px;
+  object-fit: cover;
+  border: 1px solid #000;
+  margin-top: 11px;
+}
+
+.statuses-1 {
+  width: 1155px;
+  height: 488px;
+  object-fit: cover;
+}

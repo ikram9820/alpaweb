@@ -1,10 +1,36 @@
+import * as React from "react";
+import line from "./assets/line.svg";
+import profilePhoto from "./assets/profilePhoto.svg";
+import statuses from "./assets/statuses.svg";
+import MyProfile from "../components/profile/Profile";
 import Navbar from "../components/Navbar";
-
-export default function Profile() {
+const Profile = () => {
+  const propsData = {
+    profile: {
+      line: line,
+      userProfile: {
+        username: "Ikram98",
+        profilePhoto: profilePhoto,
+        profileStats: {
+          views: "Views",
+          num1: "500",
+          num: "10",
+          statuses: "Statuses",
+        },
+        bio: "Bio",
+        editBtn: {
+          editProfile: "Edit profile",
+        },
+        name: "Name",
+      },
+      statuses: statuses,
+    },
+  };
   return (
-    <div className="container">
+    <div >
       <Navbar />
-      <h1>Hi it is my Profile</h1>
+      <MyProfile className="profile" {...propsData.profile} />
     </div>
   );
-}
+};
+export default Profile;

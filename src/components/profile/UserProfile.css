@@ -1,0 +1,59 @@
+.user-profile {
+  color: #fff;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-family: Inter, Arial;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 39px;
+  display: flex;
+}
+
+.profile-photo {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.flex-container {
+  height: 90%;
+  flex-direction: column;
+  flex-basis: 61%;
+  justify-content: space-between;
+  align-items: stretch;
+  margin-top: 4px;
+  margin-bottom: 5px;
+  display: flex;
+}
+
+.flex-container-1 {
+  width: 75%;
+  flex-direction: row;
+  flex-basis: 22%;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 2px;
+  display: flex;
+}
+
+.edit-btn-instance-1 {
+  height: 100%;
+  flex-basis: 36%;
+}
+
+.profile-stats-instance-1 {
+  width: 100%;
+  flex-basis: 25%;
+}
+
+.name {
+  margin-bottom: 10px;
+  margin-left: 2px;
+}
+
+.bio {
+  margin-top: 3px;
+  margin-bottom: -1px;
+  margin-left: 2px;
+}
