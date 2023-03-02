@@ -1,23 +1,16 @@
 import * as React from "react";
-import "./UserProfile.css";
-// import profilePhoto from "../assets/profilePhoto.svg";
-import EditBtn from "./EditBtn";
-import ProfileStats from "./ProfileStats";
 const UserProfile = (props) => {
   return (
-    <div className={`user-profile ${props.className || ""}`}>
-      <img className="profile-photo" src={props.profilePhoto} />
-      <div className="flex-container">
-        <div className="flex-container-1">
+    <div className="d-flex m-5">
+      <img className="rounded-circle" src={props.profilePhoto} />
+      <div className="fw-semibold fs-4  ms-5 mt-3">
+        <div className="d-flex">
           <span>{props.username || "Ikram98"}</span>
-          <EditBtn className="edit-btn-instance-1" {...props.editBtn} />
+          <button className="ms-5 btn btn-secondary btn-sm fw-bold">
+            Edit Profile
+          </button>
         </div>
-        <ProfileStats
-          className="profile-stats-instance-1"
-          {...props.profileStats}
-        />
-        <span className="name">{props.name || "Name"}</span>
-        <span className="bio">{props.bio || "Bio"}</span>
+        <div className="pb-2">{props.bio || "Bio"}</div>
       </div>
     </div>
   );

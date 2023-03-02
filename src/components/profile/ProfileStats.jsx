@@ -1,12 +1,16 @@
 import * as React from "react";
-import "./ProfileStats.css";
 const ProfileStats = (props) => {
   return (
-    <div className={`profile-stats ${props.className || ""}`}>
-      <span className="num-10">{props.num || "10"}</span>
-      <span className="statuses">{props.statuses || "Statuses"}</span>
-      <span className="num-500">{props.num1 || "500"}</span>
-      <span className="views">{props.views || "Views"}</span>
+    <div className="py-5 fw-semibold fs-4 my-3">
+      <span>{props.num || "10"}</span>
+      <span > Statuses</span>
+      <span >
+        <button className="mx-5 btn btn-secondary btn-sm fw-bold">
+          Add New Status
+        </button>
+      </span>
+      <span >{props.num1 || "500"}</span>
+      <span>Views</span>
     </div>
   );
 };

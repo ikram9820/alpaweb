@@ -23,7 +23,6 @@ function Navbar() {
         <Search />
       </div>
       <div className={classes.navItems}>
-        {user && <Link to="/map">Map</Link>}
         {user && <Link to="/setting">Setting</Link>}
         {user && <Link to="/profile">Profile</Link>}
         {user && <Link onClick={userLogout}>Logout</Link>}

@@ -1,7 +1,6 @@
 import * as React from "react";
 import line from "./assets/line.svg";
 import profilePhoto from "./assets/profilePhoto.svg";
-import statuses from "./assets/statuses.svg";
 import MyProfile from "../components/profile/Profile";
 import Navbar from "../components/Navbar";
 const Profile = () => {
@@ -23,7 +22,7 @@ const Profile = () => {
         },
         name: "Name",
       },
-      statuses: statuses,
+      statuses: "statuses",
     },
   };
   return (
