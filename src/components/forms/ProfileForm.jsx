@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfile, createProfile } from "../../features/profile";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { isEditProfileToggled } from "../../features/ui";
 
 export default function ProfileForm({ isEditForm }) {
   const dispatch = useDispatch();
@@ -16,23 +17,26 @@ export default function ProfileForm({ isEditForm }) {
   const [profileForm, setProfileForm] = useState(initProfile);
   const profile = useSelector((state) => state.entities.profile.profile);
   const isLoading = useSelector((state) => state.entities.profile.isLoading);
+  const isEditProfile = useSelector((state) => state.ui.isEditProfile);
 
   useEffect(() => {
     if (!isLoading || profile) navigate("/profile");
-    if(profile)  setProfileForm(profile)
+    if (profile) setProfileForm(profile);
     // else setProfileForm(initProfile)
-  }, [profile,isLoading, navigate, dispatch]);
+  }, [profile, isLoading, navigate, dispatch]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (isEditForm) dispatch(updateProfile(profileForm));
-    else dispatch(createProfile(profileForm));
+    if (isEditForm) {
+      dispatch(isEditProfileToggled());
+      dispatch(updateProfile(profileForm));
+    } else dispatch(createProfile(profileForm));
     // setProfileForm(initProfile);
   };
-  
+
   const handleInputChange = (event) => {
-    console.log(profileForm)
-    console.log([event.target.name], event.target.value)
+    console.log(profileForm);
+    console.log([event.target.name], event.target.value);
     setProfileForm({
       ...profileForm,
       [event.target.name]: event.target.value,
@@ -43,7 +47,9 @@ export default function ProfileForm({ isEditForm }) {
     <div className="row text-white">
       <div className="col-md-6 offset-md-3  mt-5">
         <form onSubmit={handleSubmit}>
-          <p className="text-center">{isEditForm? "Edit": "Create"} Your Profile</p>
+          <p className="text-center">
+            {isEditForm ? "Edit" : "Create"} Your Profile
+          </p>
 
           <div className="form-outline mb-3">
             <label className="form-label" htmlFor="profession">

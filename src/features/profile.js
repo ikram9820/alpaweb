@@ -4,7 +4,7 @@ import { apiCallBegan } from "./api";
 const slice = createSlice({
   name: "profile",
   initialState: {
-    profile: {},
+    profile: null,
     isLoading: false,
     lastFetch: null,
   },
@@ -44,6 +44,19 @@ export default slice.reducer;
 // Action Creators
 const url = "/profile";
 
+export const loadProfile = () => (dispatch, getState) => {
+  const { profile } = getState().entities.profile;
+  if (profile) return;
+
+  return dispatch(
+    apiCallBegan({
+      url: url + "/me",
+      onSuccess: profileReceived.type,
+      onStart: apiRequested.type,
+      onError: apiRequestFailed.type,
+    })
+  );
+};
 
 export const createProfile = (profile) =>
   apiCallBegan({
@@ -59,13 +72,10 @@ export const updateProfile = (profile) =>
   apiCallBegan({
     // /profile
     //PUT /profile/1
-    url: url + "/" + profile.id,
+    url: url + "/me",
     method: "put",
     data: profile,
     onSuccess: profileUpdated.type,
     onStart: apiRequested.type,
     onError: apiRequestFailed.type,
   });
-
-
-
