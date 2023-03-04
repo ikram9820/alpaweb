@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createSelector } from "reselect";
 import { apiCallBegan } from "./api";
 import moment from "moment";
 
@@ -8,10 +7,10 @@ const slice = createSlice({
   initialState: {
     list: [],
     loading: false,
-    lastFetch: null
+    lastFetch: null,
   },
   reducers: {
-    statusesRequested: (statuses, action) => {
+    apiRequested: (statuses, action) => {
       statuses.loading = true;
     },
 
@@ -21,15 +20,10 @@ const slice = createSlice({
       statuses.lastFetch = Date.now();
     },
 
-    statusesRequestFailed: (statuses, action) => {
+    apiRequestFailed: (statuses, action) => {
       statuses.loading = false;
     },
 
-    statusAssignedToUser: (statuses, action) => {
-      const { id: statusId, userId } = action.payload;
-      const index = statuses.list.findIndex(status => status.id === statusId);
-      statuses.list[index].userId = userId;
-    },
 
     // command - event
     // addStatus - statusAdded
@@ -37,21 +31,20 @@ const slice = createSlice({
       statuses.list.push(action.payload);
     },
 
-    // resolveStatus (command) - statusResolved (event)
-    statusResolved: (statuses, action) => {
-      const index = statuses.list.findIndex(status => status.id === action.payload.id);
-      statuses.list[index].resolved = true;
-    }
-  }
+    statusDeleted: (statuses, action) => {
+      statuses.list = statuses.list.filter(
+        (status) => status.id !== action.payload.id
+      );
+    },
+  },
 });
 
 export const {
   statusAdded,
-  statusResolved,
-  statusAssignedToUser,
+  statusDeleted,
   statusesReceived,
-  statusesRequested,
-  statusesRequestFailed
+  apiRequested,
+  apiRequestFailed,
 } = slice.actions;
 export default slice.reducer;
 
@@ -67,52 +60,35 @@ export const loadStatuses = () => (dispatch, getState) => {
   return dispatch(
     apiCallBegan({
       url,
-      onStart: statusesRequested.type,
       onSuccess: statusesReceived.type,
-      onError: statusesRequestFailed.type
+      onStart: apiRequested.type,
+      onError: apiRequestFailed.type,
     })
   );
 };
 
-export const addStatus = status =>
+export const addStatus = (status) =>
   apiCallBegan({
     url,
     method: "post",
     data: status,
-    onSuccess: statusAdded.type
+    onSuccess: statusAdded.type,
+    onStart: apiRequested.type,
+    onError: apiRequestFailed.type,
   });
 
-export const resolveStatus = id =>
+export const deleteStatus = (id) =>
   apiCallBegan({
     // /statuses
-    // PATCH /statuses/1
+    // DELETE /statuses/1
     url: url + "/" + id,
-    method: "patch",
-    data: { resolved: true },
-    onSuccess: statusResolved.type
+    method: "delete",
+    onSuccess: statusDeleted.type,
+    onStart: apiRequested.type,
+    onError: apiRequestFailed.type,
   });
 
-export const assignStatusToUser = (statusId, userId) =>
-  apiCallBegan({
-    url: url + "/" + statusId,
-    method: "patch",
-    data: { userId },
-    onSuccess: statusAssignedToUser.type
-  });
 
-// Selector
 
-// Memoization
-// statuses => get unresolved statuses from the cache
-
-export const getStatusesByUser = userId =>
-  createSelector(
-    state => state.entities.statuses,
-    statuses => statuses.filter(status => status.userId === userId)
-  );
-
-export const getUnresolvedStatuses = createSelector(
-  state => state.entities.statuses,
-  state => state.entities.projects,
-  (statuses, projects) => statuses.list.filter(status => !status.resolved)
-);
+export const getStatusesByUser = (userId) => (state) =>
+  state.entities.statuses.filter((status) => status.userId === userId);
