@@ -5,7 +5,7 @@ import ChatLog from "../components/chat/Chatlog";
 // import Users from "../components/Users";
 import { reset } from "../features/auth";
 import Navbar from "../components/Navbar";
-import Search from "../components/Search";
+import Search from "../components/chat/Search";
 export default function Home() {
   const [input, setInput] = useState("");
   const [chatLog, setChatLog] = useState([]);

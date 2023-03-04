@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { register, reset } from "../../features/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { updateProfile, createProfile } from "../../features/profile";
+import {useNavigate } from "react-router-dom";
 
-export default function CreateProfile() {
+export default function ProfileForm({ isEditForm }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const initProfile = {
@@ -14,21 +14,20 @@ export default function CreateProfile() {
     birth_date: "",
   };
   const [profileForm, setProfileForm] = useState(initProfile);
-  const error = useSelector((state) => state.entities.auth.isError);
-  const success = useSelector((state) => state.entities.auth.isSuccess);
-  const message = useSelector((state) => state.entities.auth.message);
-  const user = useSelector((state) => state.entities.auth.user);
+  const profile = useSelector((state) => state.entities.profile.profile);
+  const isLoading = useSelector((state) => state.entities.profile.isLoading);
 
   useEffect(() => {
-    // if (success || user) navigate("/");
-
-    dispatch(reset());
-  }, [user, error, success, message, navigate, dispatch]);
+    if (!isLoading || profile) navigate("/profile");
+    if(profile)  setProfileForm(profile)
+    else setProfileForm(initProfile)
+  }, [profile,isLoading, navigate, dispatch]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(register(profileForm));
-    setProfileForm(initProfile);
+    if (isEditForm) dispatch(updateProfile(profileForm));
+    else dispatch(createProfile(profileForm));
+    // setProfileForm(initProfile);
   };
 
   const handleInputChange = (event) => {
@@ -42,7 +41,7 @@ export default function CreateProfile() {
     <div className="row text-white">
       <div className="col-md-6 offset-md-3  mt-5">
         <form onSubmit={handleSubmit}>
-          <p className="text-center">Create Your Profile</p>
+          <p className="text-center">{isEditForm? "Edit": "Create"} Your Profile</p>
 
           <div className="form-outline mb-3">
             <label className="form-label" htmlFor="profession">

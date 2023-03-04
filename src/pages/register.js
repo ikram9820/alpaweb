@@ -10,7 +10,6 @@ export default function Register() {
     name: "",
     email: "",
     password: "",
-    birth_date: "",
   };
   const [userForm, setUserForm] = useState(initUser);
   const error = useSelector((state) => state.entities.auth.isError);
@@ -86,25 +85,8 @@ export default function Register() {
             />
           </div>
 
-          {/* <div className="form-outline mb-3">
-                        <label className="form-label" for="registerRepeatPassword">Repeat password</label>
-                        <input type="password" id="registerRepeatPassword" className="form-control" />
-                    </div> */}
-
-          <div className="form-group mb-3">
-            <label className="form-label" htmlFor="birth_date">
-              Birth Date:
-            </label>
-            <input
-              type="date"
-              className="form-control"
-              name="birth_date"
-              value={userForm.birth_date}
-              onChange={handleInputChange}
-              placeholder="YYYY-MM-DD"
-              required
-            />
-          </div>
+        
+          
           <button type="submit" className="btn btn-primary btn-block mb-3">
             Sign Up
           </button>

@@ -1,16 +1,19 @@
 import * as React from "react";
-const UserProfile = (props) => {
+const UserProfile = () => {
+  function handleEditProfile(){
+    
+  }
   return (
     <div className="d-flex m-5">
-      <img className="rounded-circle" src={props.profilePhoto} />
+      <img className="rounded-circle object-fit-cover" src='/images/img2.jpg' height={200} width={200} />
       <div className="fw-semibold fs-4  ms-5 mt-3">
         <div className="d-flex">
-          <span>{props.username || "Ikram98"}</span>
-          <button className="ms-5 btn btn-secondary btn-sm fw-bold">
+          <span>{"username" || "Ikram98"}</span>
+          <button onClick={handleEditProfile} className="ms-5 btn btn-secondary btn-sm fw-bold">
             Edit Profile
           </button>
         </div>
-        <div className="pb-2">{props.bio || "Bio"}</div>
+        <div className="pb-2">Bio</div>
       </div>
     </div>
   );

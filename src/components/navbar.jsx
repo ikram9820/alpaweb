@@ -1,5 +1,5 @@
 import classes from "./navbar.module.css";
-import Search from "./Search";
+import Search from "./chat/Search";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout, reset } from "../features/auth";

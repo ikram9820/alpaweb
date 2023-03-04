@@ -2,11 +2,11 @@ import * as React from "react";
 import StatusesGrid from "./StatusesGrid";
 import UserProfile from "./UserProfile";
 
-const MyProfile = (props) => {
+const MyProfile = () => {
   return (
     <div>
-      <UserProfile className="" {...props.userProfile} />
-      <hr className="line" src={props.line} />
+      <UserProfile />
+      <hr className="line" />
       <StatusesGrid />
     </div>
   );

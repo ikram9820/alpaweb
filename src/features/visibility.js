@@ -50,7 +50,7 @@ export const createVisibility = (visibility) =>
     url,
     method: "post",
     data: visibility,
-    onSuccess: visibilityCreated.type,\
+    onSuccess: visibilityCreated.type,
     onStart: apiRequested.type,
     onError: apiRequestFailed.type,
   });
