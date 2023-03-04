@@ -7,12 +7,11 @@ export default function CreateProfile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const initProfile = {
-   profession:"",
-   gender:"",
-   country:"",
-   language:"",
-   birth_date: "",
-
+    profession: "",
+    gender: "",
+    country: "",
+    language: "",
+    birth_date: "",
   };
   const [profileForm, setProfileForm] = useState(initProfile);
   const error = useSelector((state) => state.entities.auth.isError);
@@ -39,7 +38,6 @@ export default function CreateProfile() {
     });
   };
 
-
   return (
     <div className="row text-white">
       <div className="col-md-6 offset-md-3  mt-5">
@@ -60,7 +58,6 @@ export default function CreateProfile() {
             />
           </div>
 
-
           <div className="form-outline mb-3">
             <label className="form-label" htmlFor="gender">
               Gender
@@ -75,7 +72,6 @@ export default function CreateProfile() {
             />
           </div>
 
-
           <div className="form-outline mb-3">
             <label className="form-label" htmlFor="country">
               Country
@@ -89,7 +85,6 @@ export default function CreateProfile() {
               className="form-control"
             />
           </div>
-
 
           <div className="form-outline mb-3">
             <label className="form-label" htmlFor="language">
@@ -120,15 +115,11 @@ export default function CreateProfile() {
             />
           </div>
 
-
-
           <button type="submit" className="btn btn-primary btn-block mb-3">
             Submit
           </button>
         </form>
-       
       </div>
     </div>
   );
 }
-

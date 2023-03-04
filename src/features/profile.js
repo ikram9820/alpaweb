@@ -1,132 +1,67 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createSelector } from "reselect";
 import { apiCallBegan } from "./api";
-import moment from "moment";
 
 const slice = createSlice({
   name: "profile",
   initialState: {
-    statuses: [],
-    loading: false,
+    profile: {},
+    isLoading: false,
     lastFetch: null,
   },
   reducers: {
-    apiRequested: (users, action) => {
-      users.loading = true;
+    apiRequested: (state, action) => {
+      state.isLoading = true;
+    },
+    apiRequestFailed: (state, action) => {
+      state.isLoading = false;
     },
 
-    usersReceived: (users, action) => {
-      users.list = action.payload;
-      users.loading = false;
-      users.lastFetch = Date.now();
+    profileReceived: (state, action) => {
+      state.profile = action.payload;
+      state.isLoading = false;
     },
 
-    apiRequestFailed: (users, action) => {
-      users.loading = false;
+    profileCreated: (state, action) => {
+      state.profile = action.payload;
+      state.isLoading = false;
     },
-
-    // userAssignedToUser: (users, action) => {
-    //   const { id: userId, userId } = action.payload;
-    //   const index = users.list.findIndex(user => user.id === userId);
-    //   users.list[index].userId = userId;
-    // },
-
-    // command - event
-    // adduser - userAdded
-
-    me: (users, action) => {
-        users.me = action.payload
-        users.loading = false;
-    },
-    userAdded: (users, action) => {
-      users.list.push(action.payload);
-    },
-    userUpdated: (users, action) => {
-      users.list.push(action.payload);
-    },
-    userDeleted: (users, action) => {
-      users.list.push(action.payload);
-    },
-
-    // resolveuser (command) - userResolved (event)
-    userResolved: (users, action) => {
-      const index = users.list.findIndex(
-        (user) => user.id === action.payload.id
-      );
-      users.list[index].resolved = true;
+    profileUpdated: (state, action) => {
+      state.profile = action.payload;
+      state.isLoading = false;
     },
   },
 });
 
 export const {
-  userAdded,
-  userResolved,
-  //   userAssignedToUser,
-  usersReceived,
-  usersRequested,
-  usersRequestFailed,
+  profileCreated,
+  profileUpdated,
+  profileReceived,
+  apiRequested,
+  apiRequestFailed,
 } = slice.actions;
 export default slice.reducer;
 
 // Action Creators
-const url = "/users";
+const url = "/profile";
 
-//only those users with whome chat is done
-export const loadUsers = () => (dispatch, getState) => {
-  const { lastFetch } = getState().entities.users;
 
-  const diffInMinutes = moment().diff(moment(lastFetch), "minutes");
-  if (diffInMinutes < 10) return;
-
-  return dispatch(
-    apiCallBegan({
-      url,
-      onStart: usersRequested.type,
-      onSuccess: usersReceived.type,
-      onError: usersRequestFailed.type,
-    })
-  );
-};
-
-export const adduser = (user) =>
+export const createProfile = (profile) =>
   apiCallBegan({
     url,
     method: "post",
-    data: user,
-    onSuccess: userAdded.type,
+    data: profile,
+    onSuccess: profileCreated.type,
   });
 
-export const resolveUser = (id) =>
+export const updateProfile = (profile) =>
   apiCallBegan({
-    // /users
-    // PATCH /users/1
-    url: url + "/" + id,
-    method: "patch",
-    data: { resolved: true },
-    onSuccess: userResolved.type,
+    // /profile
+    //PUT /profile/1
+    url: url + "/" + profile.id,
+    method: "put",
+    data: profile,
+    onSuccess: profileUpdated.type,
   });
 
-// export const assignuserToUser = (userId, userId) =>
-//   apiCallBegan({
-//     url: url + "/" + userId,
-//     method: "patch",
-//     data: { userId },
-//     onSuccess: userAssignedToUser.type
-//   });
 
-// Selector
 
-// Memoization
-// users => get unresolved users from the cache
-
-// export const getusersByUser = userId =>
-//   createSelector(
-//     state => state.entities.users,
-//     users => users.filter(user => user.userId === userId)
-//   );
-
-export const getUnresolvedUsers = createSelector(
-  (state) => state.entities.users,
-  (state) => state.entities.projects,
-  (users, projects) => users.list.filter((user) => !user.resolved)
-);
