@@ -20,7 +20,7 @@ export default function ProfileForm({ isEditForm }) {
   useEffect(() => {
     if (!isLoading || profile) navigate("/profile");
     if(profile)  setProfileForm(profile)
-    else setProfileForm(initProfile)
+    // else setProfileForm(initProfile)
   }, [profile,isLoading, navigate, dispatch]);
 
   const handleSubmit = (event) => {
@@ -29,8 +29,10 @@ export default function ProfileForm({ isEditForm }) {
     else dispatch(createProfile(profileForm));
     // setProfileForm(initProfile);
   };
-
+  
   const handleInputChange = (event) => {
+    console.log(profileForm)
+    console.log([event.target.name], event.target.value)
     setProfileForm({
       ...profileForm,
       [event.target.name]: event.target.value,
@@ -52,7 +54,7 @@ export default function ProfileForm({ isEditForm }) {
               name="profession"
               value={profileForm.profession}
               onChange={handleInputChange}
-              id="profession"
+              // id="profession"
               className="form-control"
             />
           </div>
@@ -66,7 +68,7 @@ export default function ProfileForm({ isEditForm }) {
               name="gender"
               value={profileForm.gender}
               onChange={handleInputChange}
-              id="gender"
+              // id="gender"
               className="form-control"
             />
           </div>
@@ -80,7 +82,7 @@ export default function ProfileForm({ isEditForm }) {
               name="country"
               value={profileForm.country}
               onChange={handleInputChange}
-              id="country"
+              // id="country"
               className="form-control"
             />
           </div>
@@ -94,7 +96,7 @@ export default function ProfileForm({ isEditForm }) {
               name="language"
               value={profileForm.language}
               onChange={handleInputChange}
-              id="language"
+              // id="language"
               className="form-control"
             />
           </div>
@@ -109,6 +111,7 @@ export default function ProfileForm({ isEditForm }) {
               name="birth_date"
               value={profileForm.birth_date}
               onChange={handleInputChange}
+              // id="birth_date"
               placeholder="YYYY-MM-DD"
               required
             />
