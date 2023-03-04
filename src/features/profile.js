@@ -51,6 +51,8 @@ export const createProfile = (profile) =>
     method: "post",
     data: profile,
     onSuccess: profileCreated.type,
+    onStart: apiRequested.type,
+    onError: apiRequestFailed.type,
   });
 
 export const updateProfile = (profile) =>
@@ -61,6 +63,8 @@ export const updateProfile = (profile) =>
     method: "put",
     data: profile,
     onSuccess: profileUpdated.type,
+    onStart: apiRequested.type,
+    onError: apiRequestFailed.type,
   });
 
 

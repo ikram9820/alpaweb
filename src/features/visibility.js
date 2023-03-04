@@ -50,7 +50,9 @@ export const createVisibility = (visibility) =>
     url,
     method: "post",
     data: visibility,
-    onSuccess: visibilityCreated.type,
+    onSuccess: visibilityCreated.type,\
+    onStart: apiRequested.type,
+    onError: apiRequestFailed.type,
   });
 
 export const updateVisibility = (visibility) =>
@@ -61,6 +63,8 @@ export const updateVisibility = (visibility) =>
     method: "put",
     data: visibility,
     onSuccess: visibilityUpdated.type,
+    onStart: apiRequested.type,
+    onError: apiRequestFailed.type,
   });
 
 
