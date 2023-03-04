@@ -1,30 +1,29 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loadStatuses } from "../../features/status";
 import ProfileStats from "./ProfileStats";
-const statusurl = "/images/img1.jpg";
-const statusurl2 = "/images/img2.jpg";
-const statuses = [
-  { id: 1, url: statusurl },
-  { id: 2, url: statusurl },
-  { id: 3, url: statusurl2 },
-  { id: 4, url: statusurl2 },
-  { id: 5, url: statusurl },
-  { id: 6, url: statusurl },
-  { id: 7, url: statusurl2 },
-];
-
 
 function StatusesGrid() {
+  const dispatch = useDispatch();
+  const statuses = useSelector((state) => state.entities.status.list);
+  useEffect(() => {
+    dispatch(loadStatuses());
+  }, []);
   return (
     <div className="text-center">
-      <ProfileStats  />
+      <ProfileStats />
+      <button className="mb-5 btn btn-secondary btn-sm fw-bold">
+        Add New Status
+      </button>
 
       <div className="row row-cols-3">
         {statuses &&
           statuses.map((status) => {
             return (
-              <div key={status.id} className="col">
+              <div key={status._id} className="col">
                 <img
-                  className="pb-4 object-fit-cover"
-                  src={status.url}
+                  className="pb-4 object-fit-cover img-fluid d-block"
+                  src={status.file}
                   height={350}
                   width={380}
                 />

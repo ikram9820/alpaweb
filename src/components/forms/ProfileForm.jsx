@@ -35,8 +35,6 @@ export default function ProfileForm({ isEditForm }) {
   };
 
   const handleInputChange = (event) => {
-    console.log(profileForm);
-    console.log([event.target.name], event.target.value);
     setProfileForm({
       ...profileForm,
       [event.target.name]: event.target.value,

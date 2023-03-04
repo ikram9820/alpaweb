@@ -4,9 +4,9 @@ import UserProfile from "./UserProfile";
 
 const MyProfile = () => {
   return (
-    <div>
+    <div className="container">
       <UserProfile />
-      <hr className="line" />
+      <hr  />
       <StatusesGrid />
     </div>
   );

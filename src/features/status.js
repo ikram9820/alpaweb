@@ -6,35 +6,36 @@ const slice = createSlice({
   name: "statuses",
   initialState: {
     list: [],
-    loading: false,
+    isLoading: false,
     lastFetch: null,
   },
   reducers: {
     apiRequested: (statuses, action) => {
-      statuses.loading = true;
+      statuses.isLoading = true;
     },
 
     statusesReceived: (statuses, action) => {
       statuses.list = action.payload;
-      statuses.loading = false;
+      statuses.isLoading = false;
       statuses.lastFetch = Date.now();
     },
 
     apiRequestFailed: (statuses, action) => {
-      statuses.loading = false;
+      statuses.isLoading = false;
     },
-
 
     // command - event
     // addStatus - statusAdded
     statusAdded: (statuses, action) => {
       statuses.list.push(action.payload);
+      statuses.isLoading = false;
     },
 
     statusDeleted: (statuses, action) => {
       statuses.list = statuses.list.filter(
         (status) => status.id !== action.payload.id
       );
+      statuses.isLoading = false;
     },
   },
 });
@@ -52,14 +53,14 @@ export default slice.reducer;
 const url = "/statuses";
 
 export const loadStatuses = () => (dispatch, getState) => {
-  const { lastFetch } = getState().entities.statuses;
+  const { lastFetch } = getState().entities.status;
 
   const diffInMinutes = moment().diff(moment(lastFetch), "minutes");
   if (diffInMinutes < 10) return;
 
   return dispatch(
     apiCallBegan({
-      url,
+      url:url+'/me',
       onSuccess: statusesReceived.type,
       onStart: apiRequested.type,
       onError: apiRequestFailed.type,
@@ -87,8 +88,6 @@ export const deleteStatus = (id) =>
     onStart: apiRequested.type,
     onError: apiRequestFailed.type,
   });
-
-
 
 export const getStatusesByUser = (userId) => (state) =>
   state.entities.statuses.filter((status) => status.userId === userId);
