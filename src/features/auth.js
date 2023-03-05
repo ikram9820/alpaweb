@@ -16,18 +16,24 @@ const slice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    usersRequested: (state, action) => {
+    userRequested: (state, action) => {
       state.isLoading = true;
     },
 
-    usersReceived: (state, action) => {
+    userReceived: (state, action) => {
       localStorage.setItem("user", JSON.stringify(action.payload));
       state.user = action.payload;
       state.isLoading = false;
       state.isSuccess = true;
     },
+    userUpdated: (state, action) => {
+      localStorage.setItem("user", JSON.stringify(action.payload));
+      state.user = action.payload
+      state.isLoading = false;
+      state.isSuccess = true;
+    },
 
-    usersRequestFailed: (state, action) => {
+    userRequestFailed: (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.message = action.payload;
@@ -47,9 +53,10 @@ const slice = createSlice({
 });
 
 export const {
-  usersReceived,
-  usersRequested,
-  usersRequestFailed,
+  userReceived,
+  userRequested,
+  userRequestFailed,
+  userUpdated,
   logout,
   reset,
 } = slice.actions;
@@ -65,25 +72,38 @@ export const register = (user) => (dispatch, getState) => {
       url: "/users",
       method: "post",
       data: user,
-      onStart: usersRequested.type,
-      onSuccess: usersReceived.type,
-      onError: usersRequestFailed.type,
+      onStart: userRequested.type,
+      onSuccess: userReceived.type,
+      onError: userRequestFailed.type,
     })
   );
 };
-
 
 export const login = (user) => (dispatch, getState) => {
   if (getState.user) return;
 
   return dispatch(
     apiCallBegan({
-      url : "/auth",
+      url: "/auth",
       method: "post",
       data: user,
-      onStart: usersRequested.type,
-      onSuccess: usersReceived.type,
-      onError: usersRequestFailed.type,
+      onStart: userRequested.type,
+      onSuccess: userReceived.type,
+      onError: userRequestFailed.type,
+    })
+  );
+};
+
+export const updateUser = (user) => (dispatch, getState) => {
+
+  return dispatch(
+    apiCallBegan({
+      url: "/users/me",
+      method: "put",
+      data: user,
+      onStart: userRequested.type,
+      onSuccess: userUpdated.type,
+      onError: userRequestFailed.type,
     })
   );
 };

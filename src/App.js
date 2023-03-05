@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
@@ -9,21 +14,35 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Reels from "./pages/Reels";
 import Register from "./pages/Register";
+import Navbar from "./components/Navbar";
+
+import { useSelector } from "react-redux";
 
 function App() {
+  const user = useSelector((state) => state.entities.auth.user);
+
   return (
     <>
       <Router>
         <div className="bg-dark  text-white ">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/edit-profile" element={<EditProfile />} />
-            <Route path="/reels" element={<Reels />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/not-found" element={<NotFound />} />
-          </Routes>
+      <Navbar>
+          {!user ? (
+            <Routes>
+              <Route path="*" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+            </Routes>
+          ) : (
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/edit-profile" element={<EditProfile />} />
+              <Route path="/reels" element={<Reels />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/not-found" element={<NotFound />} />
+            </Routes>
+          )}
+          </Navbar>
         </div>
       </Router>
       <ToastContainer />

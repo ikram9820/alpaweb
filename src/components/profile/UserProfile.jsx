@@ -1,10 +1,9 @@
-import { useSelector, useDispatch } from "react-redux";
-import { isEditProfileToggled } from "../../features/ui";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.entities.auth.user);
-  const profile = useSelector((state) => state.entities.profile.profile);
+  const navigate = useNavigate();
 
   return (
     <div className="d-flex m-5">
@@ -16,18 +15,15 @@ const UserProfile = () => {
       />
       <div className="fw-semibold fs-4  ms-5 mt-3">
         <div className="d-flex mb-2">
-          <span>{user.name}</span>
+          <span>{user && user.name}</span>
           <button
-            onClick={() => dispatch(isEditProfileToggled())}
+            onClick={() => navigate("/edit-profile")}
             className="ms-5 btn btn-secondary btn-sm fw-bold"
           >
             Edit Profile
           </button>
         </div>
-        <div className="pb-2">country: {profile.country}</div>
-        <div className="pb-2">language: {profile.language}</div>
-        <div className="pb-2">gender: {profile.gender}</div>
-        <div className="pb-2">profession: {profile.profession}</div>
+        <div className="pb-2"> {user && user.about}</div>
       </div>
     </div>
   );

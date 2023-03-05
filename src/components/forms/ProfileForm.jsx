@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfile, createProfile } from "../../features/profile";
 import { useNavigate } from "react-router-dom";
-import { isEditProfileToggled } from "../../features/ui";
 
 export default function ProfileForm({ isEditForm }) {
   const dispatch = useDispatch();
@@ -17,21 +16,17 @@ export default function ProfileForm({ isEditForm }) {
   const [profileForm, setProfileForm] = useState(initProfile);
   const profile = useSelector((state) => state.entities.profile.profile);
   const isLoading = useSelector((state) => state.entities.profile.isLoading);
-  const isEditProfile = useSelector((state) => state.ui.isEditProfile);
 
   useEffect(() => {
-    if (!isLoading || profile) navigate("/profile");
+    // if (!isLoading ) navigate("/profile");
     if (profile) setProfileForm(profile);
-    // else setProfileForm(initProfile)
   }, [profile, isLoading, navigate, dispatch]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (isEditForm) {
-      dispatch(isEditProfileToggled());
       dispatch(updateProfile(profileForm));
     } else dispatch(createProfile(profileForm));
-    // setProfileForm(initProfile);
   };
 
   const handleInputChange = (event) => {
@@ -58,7 +53,7 @@ export default function ProfileForm({ isEditForm }) {
               name="profession"
               value={profileForm.profession}
               onChange={handleInputChange}
-              // id="profession"
+              id="profession"
               className="form-control"
             />
           </div>
@@ -72,7 +67,7 @@ export default function ProfileForm({ isEditForm }) {
               name="gender"
               value={profileForm.gender}
               onChange={handleInputChange}
-              // id="gender"
+              id="gender"
               className="form-control"
             />
           </div>
@@ -86,7 +81,7 @@ export default function ProfileForm({ isEditForm }) {
               name="country"
               value={profileForm.country}
               onChange={handleInputChange}
-              // id="country"
+              id="country"
               className="form-control"
             />
           </div>
@@ -100,7 +95,7 @@ export default function ProfileForm({ isEditForm }) {
               name="language"
               value={profileForm.language}
               onChange={handleInputChange}
-              // id="language"
+              id="language"
               className="form-control"
             />
           </div>
@@ -115,7 +110,7 @@ export default function ProfileForm({ isEditForm }) {
               name="birth_date"
               value={profileForm.birth_date}
               onChange={handleInputChange}
-              // id="birth_date"
+              id="birth_date"
               placeholder="YYYY-MM-DD"
               required
             />
