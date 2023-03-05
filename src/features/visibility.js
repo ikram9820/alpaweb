@@ -4,7 +4,7 @@ import { apiCallBegan } from "./api";
 const slice = createSlice({
   name: "visibility",
   initialState: {
-    visibility: {},
+    visibility: null,
     isLoading: false,
     lastFetch: null,
   },
@@ -20,11 +20,6 @@ const slice = createSlice({
       state.visibility = action.payload;
       state.isLoading = false;
     },
-
-    visibilityCreated: (state, action) => {
-      state.visibility = action.payload;
-      state.isLoading = false;
-    },
     visibilityUpdated: (state, action) => {
       state.visibility = action.payload;
       state.isLoading = false;
@@ -33,7 +28,6 @@ const slice = createSlice({
 });
 
 export const {
-  visibilityCreated,
   visibilityUpdated,
   visibilityReceived,
   apiRequested,
@@ -44,22 +38,10 @@ export default slice.reducer;
 // Action Creators
 const url = "/visibility";
 
-
-export const createVisibility = (visibility) =>
-  apiCallBegan({
-    url,
-    method: "post",
-    data: visibility,
-    onSuccess: visibilityCreated.type,
-    onStart: apiRequested.type,
-    onError: apiRequestFailed.type,
-  });
-
 export const updateVisibility = (visibility) =>
   apiCallBegan({
-    // /visibility
-    //PUT /visibility/1
-    url: url + "/" + visibility.id,
+  
+    url,
     method: "put",
     data: visibility,
     onSuccess: visibilityUpdated.type,

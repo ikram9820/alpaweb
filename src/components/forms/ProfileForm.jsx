@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfile, createProfile } from "../../features/profile";
-import { useNavigate } from "react-router-dom";
 
 export default function ProfileForm({ isEditForm }) {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const initProfile = {
     profession: "",
     gender: "",
@@ -18,9 +16,9 @@ export default function ProfileForm({ isEditForm }) {
   const isLoading = useSelector((state) => state.entities.profile.isLoading);
 
   useEffect(() => {
-    // if (!isLoading ) navigate("/profile");
+    
     if (profile) setProfileForm(profile);
-  }, [profile, isLoading, navigate, dispatch]);
+  }, [profile, isLoading, dispatch]);
 
   const handleSubmit = (event) => {
     event.preventDefault();

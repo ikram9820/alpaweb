@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../../features/auth";
-import { useNavigate } from "react-router-dom";
 
 export default function UserEditForm() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const initUser = {
     name: "",
     about: "",
@@ -16,10 +14,9 @@ export default function UserEditForm() {
   const isLoading = useSelector((state) => state.entities.auth.isLoading);
 
   useEffect(() => {
-    // if (!isLoading ) navigate("/profile");
     if (user)
       setUserForm({ name: user.name, about: user.about, profile: user.dp_url });
-  }, [user, isLoading, navigate, dispatch]);
+  }, [user, isLoading, dispatch]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
