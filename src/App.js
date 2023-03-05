@@ -1,12 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Profile from "./pages/Profile";
-import Setting from "./pages/Setting";
 import "./App.css";
+import EditProfile from "./pages/EditProfile";
+import Home from "./pages/Home";
+import NotFound from "./pages/404";
+import Login from "./pages/Login";
+import Profile from "./pages/Profile";
+import Reels from "./pages/Reels";
+import Register from "./pages/Register";
 
 function App() {
   return (
@@ -16,9 +18,11 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/setting" element={<Setting />} />
+            <Route path="/edit-profile" element={<EditProfile />} />
+            <Route path="/reels" element={<Reels />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/not-found" element={<NotFound />} />
           </Routes>
         </div>
       </Router>

@@ -1,14 +1,29 @@
-import * as React from "react";
 import MyProfile from "../components/profile/Profile";
 import Navbar from "../components/Navbar";
 import ProfileForm from "../components/forms/ProfileForm";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { loadProfile } from "../features/profile";
 const Profile = () => {
-  let profile = null;
+  const dispatch = useDispatch();
+
+  const profile = useSelector((state) => state.entities.profile.profile);
+  const isLoading = useSelector((state) => state.entities.profile.isLoading);
+  const isEditProfile = useSelector((state) => state.ui.isEditProfile);
+  useEffect(() => {
+    dispatch(loadProfile());
+  }, []);
   return (
     <div>
       <Navbar />
-      {!profile && <ProfileForm isEditForm={false} />}
-      {profile && <MyProfile className="profile"  />}
+      {isEditProfile ? (
+        <ProfileForm isEditForm={true} />
+      ) : (
+        <>
+          {!isLoading && !profile && <ProfileForm isEditForm={false} />}
+          {profile && <MyProfile className="profile" />}
+        </>
+      )}
     </div>
   );
 };

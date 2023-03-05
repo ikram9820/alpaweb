@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loadStatuses } from "../../features/status";
+import { loadStatuses, addStatus } from "../../features/status";
 import ProfileStats from "./ProfileStats";
 
 function StatusesGrid() {
@@ -9,12 +9,27 @@ function StatusesGrid() {
   useEffect(() => {
     dispatch(loadStatuses());
   }, []);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    dispatch(addStatus(file));
+  };
+
   return (
     <div className="text-center">
       <ProfileStats />
-      <button className="mb-5 btn btn-secondary btn-sm fw-bold">
-        Add New Status
-      </button>
+
+      <div className="mb-5 btn btn-secondary btn-sm fw-bold">
+        <label className="file-upload-label" htmlFor="file-input">
+          Add New File
+        </label>
+        <input
+          type="file" 
+          id="file-input"
+          name="file-input"
+          onChange={handleFileChange}
+        />
+      </div>
 
       <div className="row row-cols-3">
         {statuses &&
