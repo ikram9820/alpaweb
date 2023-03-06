@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const MultiSelectSearch = ({ options, name,getSelectedOptions }) => {
+const SearchableMultiSelect = ({ options, name, getSelectedOptions }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [filterOptions, setFilterOptions] = useState([]);
   const [searchValue, setSearchValue] = useState("");
@@ -12,35 +12,33 @@ const MultiSelectSearch = ({ options, name,getSelectedOptions }) => {
     } else {
       setSelectedOptions([...selectedOptions, option]);
     }
-    getSelectedOptions(selectedOptions)
+    // getSelectedOptions(selectedOptions);
     setSearchValue("");
     setIsCollapsed(true);
   };
 
   useEffect(() => {
     if (searchValue !== "") {
-      console.log(searchValue)
       setIsCollapsed(false);
       setFilterOptions(handleFilterOptions(options, searchValue));
     } else {
       setIsCollapsed(true);
       setFilterOptions([]);
     }
-  }, [searchValue]);
-
+    // this function works here but lagging at handleOptionClick
+    getSelectedOptions(selectedOptions);
+  }, [selectedOptions, searchValue]);
 
   const handleFilterOptions = (options, value) => {
-    return options.filter((option) => {
-      const options = option.toLowerCase().includes(value.toLowerCase());
-      return options;
-    });
+    return options.filter((option) =>
+      option.toLowerCase().includes(value.toLowerCase())
+    );
   };
 
   return (
     <div className="multi-select-search">
       <div className="form-group my-2 mt-4">
         <div className="text-capitalize">Selected {name}:</div>
-
         {selectedOptions.map((option) => (
           <span key={option} className="py-2 pe-3 badge">
             {option},
@@ -80,4 +78,4 @@ const MultiSelectSearch = ({ options, name,getSelectedOptions }) => {
   );
 };
 
-export default MultiSelectSearch;
+export default SearchableMultiSelect;

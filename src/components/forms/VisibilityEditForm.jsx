@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateVisibility } from "../../features/visibility";
-import MultiSelectSearch from "./MultiSelectSearch";
+import SearchableMultiSelect from "./SearchableMultiSelect";
 import {
   countries,
   professions,
@@ -20,13 +20,24 @@ function VisibilityEditForm() {
   const visibility = useSelector(
     (state) => state.entities.visibility.visibility
   );
+  const [selectedCountries, setSelectedCountries] = useState([]);
+  const [selectedLanguages, setSelectedLanguages] = useState([]);
+  const [selectedProfessions, setSelectedProfessions] = useState([]);
+  const [selectedGenders, setSelectedGenders] = useState([]);
 
-  // useEffect(() => {
-  //   if (visibility) {
-  //     console.log(visibility);
-  //     setAgeRange(visibility);
-  //   }
-  // }, [visibility, isLoading, dispatch]);
+  useEffect(() => {
+    console.log("visibility :",
+      selectedCountries,
+      selectedGenders,
+      selectedLanguages,
+      selectedProfessions
+    );
+  }, [
+    selectedCountries,
+    selectedGenders,
+    selectedLanguages,
+    selectedProfessions,
+  ]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -37,14 +48,23 @@ function VisibilityEditForm() {
       languages: [],
       ageRange: { min: 0, max: 0 },
     };
+    console.log(
+      selectedCountries,
+      selectedGenders,
+      selectedLanguages,
+      selectedProfessions
+    );
+    visibilityFilter.professions = selectedProfessions;
+    visibilityFilter.genders = selectedGenders;
+    visibilityFilter.countries = selectedCountries;
+    visibilityFilter.languages = selectedLanguages;
     visibilityFilter.ageRange.min = ageRange.min;
     visibilityFilter.ageRange.max = ageRange.max;
-    console.log(visibilityFilter);
+    // console.log(visibilityFilter);
     dispatch(updateVisibility(visibilityFilter));
   };
 
   const handleInputChange = (event) => {
-    console.log(event.target.value);
     setAgeRange({
       ...ageRange,
       [event.target.name]: event.target.value,
@@ -57,29 +77,29 @@ function VisibilityEditForm() {
         <form onSubmit={handleSubmit}>
           <p className="text-center">Your Profile</p>
 
-          <MultiSelectSearch
+          <SearchableMultiSelect
             name={"professions"}
             options={professions}
-            getSelectedOptions={() => {}}
+            getSelectedOptions={(list) => setSelectedProfessions(list)}
           />
-          <MultiSelectSearch
+          <SearchableMultiSelect
             name={"countries"}
             options={countries}
-            getSelectedOptions={() => {}}
+            getSelectedOptions={(list) => setSelectedCountries(list)}
           />
-          <MultiSelectSearch
+          <SearchableMultiSelect
             name={"languages"}
             options={languages}
-            getSelectedOptions={() => {}}
+            getSelectedOptions={(list) => setSelectedLanguages(list)}
           />
-          <MultiSelectSearch
+          <SearchableMultiSelect
             name={"genders"}
-            options={["Male","Female","Other"]}
-            getSelectedOptions={() => {}}
+            options={["Male", "Female", "Other"]}
+            getSelectedOptions={(list) => setSelectedGenders(list)}
           />
 
           <div className="form-group d-flex mb-3">
-            <div className="me-4">
+            <div className="me-5">
               <Input
                 name={"min_age"}
                 type={"number"}
