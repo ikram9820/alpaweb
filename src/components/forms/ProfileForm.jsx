@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfile, createProfile } from "../../features/profile";
+import Input from "./Input";
 
 export default function ProfileForm({ isEditForm }) {
   const dispatch = useDispatch();
@@ -16,7 +17,6 @@ export default function ProfileForm({ isEditForm }) {
   const isLoading = useSelector((state) => state.entities.profile.isLoading);
 
   useEffect(() => {
-    
     if (profile) setProfileForm(profile);
   }, [profile, isLoading, dispatch]);
 
@@ -41,79 +41,36 @@ export default function ProfileForm({ isEditForm }) {
           <p className="text-center">
             {isEditForm ? "Edit" : "Create"} Your Profile
           </p>
-
-          <div className="form-outline mb-3">
-            <label className="form-label" htmlFor="profession">
-              Profession
-            </label>
-            <input
-              type="text"
-              name="profession"
-              value={profileForm.profession}
-              onChange={handleInputChange}
-              id="profession"
-              className="form-control"
-            />
-          </div>
-
-          <div className="form-outline mb-3">
-            <label className="form-label" htmlFor="gender">
-              Gender
-            </label>
-            <input
-              type="text"
-              name="gender"
-              value={profileForm.gender}
-              onChange={handleInputChange}
-              id="gender"
-              className="form-control"
-            />
-          </div>
-
-          <div className="form-outline mb-3">
-            <label className="form-label" htmlFor="country">
-              Country
-            </label>
-            <input
-              type="text"
-              name="country"
-              value={profileForm.country}
-              onChange={handleInputChange}
-              id="country"
-              className="form-control"
-            />
-          </div>
-
-          <div className="form-outline mb-3">
-            <label className="form-label" htmlFor="language">
-              language
-            </label>
-            <input
-              type="text"
-              name="language"
-              value={profileForm.language}
-              onChange={handleInputChange}
-              id="language"
-              className="form-control"
-            />
-          </div>
-
-          <div className="form-group mb-3">
-            <label className="form-label" htmlFor="birth_date">
-              Birth Date:
-            </label>
-            <input
-              type="date"
-              className="form-control"
-              name="birth_date"
-              value={profileForm.birth_date}
-              onChange={handleInputChange}
-              id="birth_date"
-              placeholder="YYYY-MM-DD"
-              required
-            />
-          </div>
-
+          <Input
+            name={"profession"}
+            type={"text"}
+            value={profileForm.profession}
+            handleInputChange={handleInputChange}
+          />
+          <Input
+            name={"gender"}
+            type={"text"}
+            value={profileForm.gender}
+            handleInputChange={handleInputChange}
+          />
+          <Input
+            name={"country"}
+            type={"text"}
+            value={profileForm.country}
+            handleInputChange={handleInputChange}
+          />
+          <Input
+            name={"language"}
+            type={"text"}
+            value={profileForm.language}
+            handleInputChange={handleInputChange}
+          />
+          <Input
+            name={"birth_date"}
+            type={"date"}
+            value={profileForm.birth_date}
+            handleInputChange={handleInputChange}
+          />
           <button type="submit" className="btn btn-primary btn-block mb-3">
             Submit
           </button>

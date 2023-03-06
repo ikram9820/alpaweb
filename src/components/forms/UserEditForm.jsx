@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Input from "./Input";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../../features/auth";
 
@@ -36,33 +37,19 @@ export default function UserEditForm() {
         <form onSubmit={handleSubmit}>
           <p className="text-center">Update Your Details</p>
 
-          <div className="form-outline mb-3">
-            <label className="form-label" htmlFor="name">
-              Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              value={userForm.name}
-              onChange={handleInputChange}
-              id="name"
-              className="form-control"
-            />
-          </div>
+          <Input
+            name={"name"}
+            type={"text"}
+            value={userForm.name}
+            handleInputChange={handleInputChange}
+          />
 
-          <div className="form-outline mb-3">
-            <label className="form-label" htmlFor="about">
-              About
-            </label>
-            <input
-              type="text"
-              name="about"
-              value={userForm.about}
-              onChange={handleInputChange}
-              id="about"
-              className="form-control"
-            />
-          </div>
+          <Input
+            name={"about"}
+            type={"text"}
+            value={userForm.about}
+            handleInputChange={handleInputChange}
+          />
 
           <button type="submit" className="btn btn-primary btn-block mb-3">
             Submit

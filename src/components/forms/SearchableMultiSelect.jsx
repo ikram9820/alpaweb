@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Input from "./Input";
 
 const SearchableMultiSelect = ({ options, name, getSelectedOptions }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -45,19 +46,13 @@ const SearchableMultiSelect = ({ options, name, getSelectedOptions }) => {
           </span>
         ))}
       </div>
-      <div className="form-group">
-        <label htmlFor={name} className="text-capitalize">
-          {name}
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id={name}
-          placeholder={`Search for ${name}`}
-          onChange={(event) => setSearchValue(event.target.value.trim())}
-          value={searchValue}
-        />
-      </div>
+      <Input
+        name={name}
+        type={"text"}
+        value={searchValue}
+        handleInputChange={(e) => setSearchValue(e.target.value.trim())}
+      />
+
       <div className="mb-3"></div>
       {!isCollapsed && (
         <ul className="list-group">
