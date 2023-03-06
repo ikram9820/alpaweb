@@ -1,5 +1,4 @@
 import MyProfile from "../components/profile/Profile";
-import Navbar from "../components/Navbar";
 import ProfileForm from "../components/forms/ProfileForm";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -15,7 +14,6 @@ const Profile = () => {
   }, []);
   return (
     <div>
-      <Navbar />
       {isEditProfile ? (
         <ProfileForm isEditForm={true} />
       ) : (
