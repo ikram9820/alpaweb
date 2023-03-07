@@ -3,7 +3,7 @@ import { apiCallBegan } from "./api";
 
 // Get user from localStorage
 const user = JSON.parse(localStorage.getItem("user"));
-console.log(user);
+
 const initialState = {
   user: user ? user : null,
   isError: false,
@@ -21,13 +21,11 @@ const slice = createSlice({
     },
 
     userReceived: (state, action) => {
-      localStorage.setItem("user", JSON.stringify(action.payload));
       state.user = action.payload;
       state.isLoading = false;
       state.isSuccess = true;
     },
     userUpdated: (state, action) => {
-      localStorage.setItem("user", JSON.stringify(action.payload));
       state.user = action.payload
       state.isLoading = false;
       state.isSuccess = true;
@@ -40,7 +38,6 @@ const slice = createSlice({
       state.user = null;
     },
     logout: (state, action) => {
-      localStorage.removeItem("user");
       state.user = null;
     },
     reset: (state, action) => {
