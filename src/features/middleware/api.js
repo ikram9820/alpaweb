@@ -1,5 +1,5 @@
 import axios from "axios";
-import * as actions from "../api";
+import * as actions from "../actions_api";
 
 const api =
   ({ dispatch }) =>

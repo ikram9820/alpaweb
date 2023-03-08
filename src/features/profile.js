@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { apiCallBegan } from "./api";
+import { apiCallBegan } from "./actions_api";
 
 const slice = createSlice({
   name: "profile",

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { apiCallBegan } from "./api";
+import { apiCallBegan } from "./actions_api";
 import moment from "moment";
 
 const slice = createSlice({
@@ -60,7 +60,7 @@ export const loadStatuses = () => (dispatch, getState) => {
 
   return dispatch(
     apiCallBegan({
-      url:url+'/me',
+      url: url + "/me",
       onSuccess: statusesReceived.type,
       onStart: apiRequested.type,
       onError: apiRequestFailed.type,

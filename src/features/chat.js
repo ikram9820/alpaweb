@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { ioCallBegan } from "./actions_io";
+import moment from "moment";
 
 const slice = createSlice({
   name: "chat",
@@ -80,3 +81,103 @@ export const {
   apiRequestFailed,
 } = slice.actions;
 export default slice.reducer;
+
+// Action Creators
+
+//only user chats
+export const loadChats = () => (dispatch, getState) => {
+  return dispatch(
+    ioCallBegan({
+      func: "on",
+      event: "",
+      onSuccess: chatsReceived.type,
+      onStart: apiRequested.type,
+      onError: apiRequestFailed.type,
+    })
+  );
+};
+
+//only those users which are available in user's chats
+export const loadUsers = () => (dispatch, getState) => {
+  return dispatch(
+    ioCallBegan({
+      func: "on",
+      event: "",
+      onSuccess: usersReceived.type,
+      onStart: apiRequested.type,
+      onError: apiRequestFailed.type,
+    })
+  );
+};
+
+//only those users with whome chat is done
+export const loadMessages = () => (dispatch, getState) => {
+  const { lastFetch } = getState().entities.chat;
+
+  const diffInMinutes = moment().diff(moment(lastFetch), "minutes");
+  if (diffInMinutes < 10) return;
+
+  return dispatch(
+    ioCallBegan({
+      func: "on",
+      event: "",
+      onSuccess: messagesReceived.type,
+      onStart: apiRequested.type,
+      onError: apiRequestFailed.type,
+    })
+  );
+};
+
+export const addChat = (chat) =>
+  ioCallBegan({
+    func: "emit",
+    event: "",
+    method: "post",
+    data: chat,
+    onSuccess: chatAdded.type,
+  });
+
+export const addUser = (user) =>
+  ioCallBegan({
+    func: "emit",
+    event: "",
+    method: "post",
+    data: user,
+    onSuccess: userAdded.type,
+  });
+
+export const addMessage = (message) =>
+  ioCallBegan({
+    func: "emit",
+    event: "",
+    method: "post",
+    data: message,
+    onSuccess: messageAdded.type,
+  });
+
+export const deleteChat = (chat) =>
+  ioCallBegan({
+    func: "emit",
+    event: "",
+    method: "delete",
+    data: chat,
+    onSuccess: chatDeleted.type,
+  });
+
+export const deleteUser = (user) =>
+  ioCallBegan({
+    func: "emit",
+    event: "",
+    method: "delete",
+    data: user,
+    onSuccess: userDeleted.type,
+  });
+
+export const deleteMessage = (message) =>
+  ioCallBegan({
+    func: "emit",
+    event: "",
+    method: "delete",
+    data: message,
+    onSuccess: messageDeleted.type,
+  });
