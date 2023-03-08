@@ -7,22 +7,22 @@ const slice = createSlice({
   name: "users",
   initialState: {
     list: [],
-    loading: false,
+    isLoading: false,
     lastFetch: null,
   },
   reducers: {
     apiRequested: (users, action) => {
-      users.loading = true;
+      users.isLoading = true;
     },
 
     usersReceived: (users, action) => {
       users.list = action.payload;
-      users.loading = false;
+      users.isLoading = false;
       users.lastFetch = Date.now();
     },
 
     apiRequestFailed: (users, action) => {
-      users.loading = false;
+      users.isLoading = false;
     },
 
     // userAssignedToUser: (users, action) => {
@@ -36,7 +36,7 @@ const slice = createSlice({
 
     me: (users, action) => {
         users.me = action.payload
-        users.loading = false;
+        users.isLoading = false;
     },
     userAdded: (users, action) => {
       users.list.push(action.payload);

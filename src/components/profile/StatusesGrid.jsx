@@ -8,7 +8,7 @@ function StatusesGrid() {
   const statuses = useSelector((state) => state.entities.status.list);
   useEffect(() => {
     dispatch(loadStatuses());
-  }, []);
+  }, [dispatch]);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
