@@ -1,14 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChatLog from "../components/chat/Chatlog";
+import { useSelector, useDispatch } from "react-redux";
+import { addMessage } from "../features/chat";
+import { loadChats } from "../features/chats";
+import Chats from "../components/chat/Chats";
 export default function Home() {
-  
+
   const [input, setInput] = useState("");
-  const [chatLog, setChatLog] = useState([]);
- 
+  const [chatId, setChatId] = useState("");
+  const dispatch = useDispatch();
+  const chats = useSelector(state=> state.entities.chats)
+
+  
+
+  useEffect(() => {
+    dispatch(loadChats);
+  },[chats,dispatch]);
+
+
   async function handleSubmit(e) {
     e.preventDefault();
-    let newChatLog = [...chatLog, { user: "me", message: `${input}` }];
-    setChatLog(newChatLog);
+    dispatch(addMessage(data))
     setInput(" ");
   }
 
@@ -19,10 +31,10 @@ export default function Home() {
           <span className="fw-bolder fs-5">+</span>
           Create New Group
         </div>
+        <Chats chats={chats} onChatSelect={(chatId)=>setChatId(chatId)} />
       </aside>
       <section className="chatbox">
-
-        <ChatLog chatLog={chatLog} />
+        <ChatLog chatLog={chatId} />
 
         <div className="chat-input-holder">
           <form onSubmit={handleSubmit}>

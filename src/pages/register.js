@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { register, reset } from "../features/auth";
 import { Link, useNavigate } from "react-router-dom";
-
+import Input from "../components/forms/Input";
 export default function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -10,6 +10,7 @@ export default function Register() {
     name: "",
     email: "",
     password: "",
+    about: "",
   };
   const [userForm, setUserForm] = useState(initUser);
   const error = useSelector((state) => state.entities.auth.isError);
@@ -36,57 +37,38 @@ export default function Register() {
     });
   };
 
-
   return (
     <div className="row bg-dark text-white vh-100">
       <div className="col-md-6 offset-md-3  mt-5">
         <form onSubmit={handleSubmit}>
           <p className="text-center">Sign up</p>
 
-          <div className="form-outline mb-3">
-            <label className="form-label" htmlFor="registerName">
-              Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              value={userForm.name}
-              onChange={handleInputChange}
-              id="registerName"
-              className="form-control"
-            />
-          </div>
+          <Input
+            name={"email"}
+            type={"email"}
+            value={userForm.email}
+            handleInputChange={handleInputChange}
+          />
+          <Input
+            name={"password"}
+            type={"password"}
+            value={userForm.password}
+            handleInputChange={handleInputChange}
+          />
 
-          <div className="form-outline mb-3">
-            <label className="form-label" htmlFor="registerEmail">
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              value={userForm.email}
-              onChange={handleInputChange}
-              id="registerEmail"
-              className="form-control"
-            />
-          </div>
+          <Input
+            name={"name"}
+            type={"text"}
+            value={userForm.name}
+            handleInputChange={handleInputChange}
+          />
+          <Input
+            name={"about"}
+            type={"text"}
+            value={userForm.about}
+            handleInputChange={handleInputChange}
+          />
 
-          <div className="form-outline mb-3">
-            <label className="form-label" htmlFor="registerPassword">
-              Password
-            </label>
-            <input
-              name="password"
-              value={userForm.password}
-              onChange={handleInputChange}
-              type="password"
-              id="registerPassword"
-              className="form-control"
-            />
-          </div>
-
-        
-          
           <button type="submit" className="btn btn-primary btn-block mb-3">
             Sign Up
           </button>

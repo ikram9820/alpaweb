@@ -11,7 +11,7 @@ const Profile = () => {
   const isEditProfile = useSelector((state) => state.ui.isEditProfile);
   useEffect(() => {
     dispatch(loadProfile());
-  }, []);
+  }, [dispatch]);
   return (
     <div>
       {isEditProfile ? (

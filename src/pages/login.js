@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login, reset } from "../features/auth";
-
+import Input from "../components/forms/Input";
 export default function Login() {
   const dispatch = useDispatch();
   const initUser = {
@@ -41,33 +41,18 @@ export default function Login() {
         <form onSubmit={handleSubmit}>
           <p className="text-center">Login</p>
 
-          <div className="form-outline mb-3">
-            <label className="form-label" htmlFor="email">
-              Email address
-            </label>
-            <input
-              type="email"
-              name="email"
-              value={credentials.email}
-              onChange={handleInputChange}
-              id="email"
-              className="form-control"
-            />
-          </div>
-
-          <div className="form-outline mb-3">
-            <label className="form-label" htmlFor="password">
-              Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              value={credentials.password}
-              onChange={handleInputChange}
-              id="password"
-              className="form-control"
-            />
-          </div>
+          <Input
+            name={"email"}
+            type={"email"}
+            value={credentials.email}
+            handleInputChange={handleInputChange}
+          />
+          <Input
+            name={"password"}
+            type={"password"}
+            value={credentials.password}
+            handleInputChange={handleInputChange}
+          />
 
           <button type="submit" className="btn btn-primary btn-block mb-4">
             Sign in

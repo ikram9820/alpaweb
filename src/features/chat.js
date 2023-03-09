@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ioCallBegan } from "./actions_io";
-import moment from "moment";
+import { apiCallBegan } from "./actions_api";
 
 const slice = createSlice({
   name: "chat",
   initialState: {
     messages: [],
     users: [],
-    chats: [],
+    chat: null,
     isLoading: false,
     lastFetch: null,
   },
@@ -16,23 +16,10 @@ const slice = createSlice({
       state.isLoading = true;
     },
 
-    chatsReceived: (state, action) => {
-      state.chats = action.payload;
-      state.isLoading = false;
-    },
-
-    chatAdded: (state, action) => {
-      state.chats.push(action.payload);
-    },
-
-    chatDeleted: (state, action) => {
-      state.chats = state.chats.filter(
-        (chat) => chat.id !== action.payload.chatId
-      );
-    },
-
-    usersReceived: (state, action) => {
-      state.users = action.payload;
+    chatHistoryReceived: (state, action) => {
+      state.chat = action.payload.chat;
+      state.users = action.payload.users;
+      state.messages = action.payload.messages;
       state.isLoading = false;
     },
 
@@ -44,11 +31,6 @@ const slice = createSlice({
       state.users = state.users.filter(
         (user) => user.id !== action.payload.userId
       );
-    },
-
-    messagesReceived: (state, action) => {
-      state.messages = action.payload;
-      state.isLoading = false;
     },
 
     messageAdded: (state, action) => {
@@ -69,13 +51,9 @@ const slice = createSlice({
 
 export const {
   apiRequested,
-  chatsReceived,
-  chatAdded,
-  chatDeleted,
+  chatHistoryReceived,
   userAdded,
-  usersReceived,
   userDeleted,
-  messagesReceived,
   messageAdded,
   messageDeleted,
   apiRequestFailed,
@@ -85,63 +63,23 @@ export default slice.reducer;
 // Action Creators
 
 //only user chats
-export const loadChats = () => (dispatch, getState) => {
+export const loadChatHistory = (chatId) => (dispatch, getState) => {
   return dispatch(
-    ioCallBegan({
-      func: "on",
-      event: "",
-      onSuccess: chatsReceived.type,
+    apiCallBegan({
+      url: `/chats/:${chatId}`,
+      onSuccess: chatHistoryReceived.type,
       onStart: apiRequested.type,
       onError: apiRequestFailed.type,
     })
   );
 };
 
-//only those users which are available in user's chats
-export const loadUsers = () => (dispatch, getState) => {
-  return dispatch(
-    ioCallBegan({
-      func: "on",
-      event: "",
-      onSuccess: usersReceived.type,
-      onStart: apiRequested.type,
-      onError: apiRequestFailed.type,
-    })
-  );
-};
 
-//only those users with whome chat is done
-export const loadMessages = () => (dispatch, getState) => {
-  const { lastFetch } = getState().entities.chat;
-
-  const diffInMinutes = moment().diff(moment(lastFetch), "minutes");
-  if (diffInMinutes < 10) return;
-
-  return dispatch(
-    ioCallBegan({
-      func: "on",
-      event: "",
-      onSuccess: messagesReceived.type,
-      onStart: apiRequested.type,
-      onError: apiRequestFailed.type,
-    })
-  );
-};
-
-export const addChat = (chat) =>
-  ioCallBegan({
-    func: "emit",
-    event: "",
-    method: "post",
-    data: chat,
-    onSuccess: chatAdded.type,
-  });
 
 export const addUser = (user) =>
   ioCallBegan({
     func: "emit",
-    event: "",
-    method: "post",
+    event: "addUserTo",
     data: user,
     onSuccess: userAdded.type,
   });
@@ -149,35 +87,24 @@ export const addUser = (user) =>
 export const addMessage = (message) =>
   ioCallBegan({
     func: "emit",
-    event: "",
-    method: "post",
+    event: "sendMessage",
     data: message,
     onSuccess: messageAdded.type,
   });
 
-export const deleteChat = (chat) =>
-  ioCallBegan({
-    func: "emit",
-    event: "",
-    method: "delete",
-    data: chat,
-    onSuccess: chatDeleted.type,
-  });
 
-export const deleteUser = (user) =>
+export const deleteUser = (userId) =>
   ioCallBegan({
     func: "emit",
     event: "",
-    method: "delete",
-    data: user,
+    data: userId,
     onSuccess: userDeleted.type,
   });
 
-export const deleteMessage = (message) =>
+export const deleteMessage = (messageId) =>
   ioCallBegan({
     func: "emit",
     event: "",
-    method: "delete",
-    data: message,
+    data: messageId,
     onSuccess: messageDeleted.type,
   });
