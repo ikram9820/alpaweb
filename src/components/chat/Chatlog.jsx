@@ -12,7 +12,7 @@ export default function ChatLog({ chatId }) {
 
   return (
     <div className="chat-log">
-      {chatHistory.messages.map((message) => (
+      {chatHistory.messages[chatId].map((message) => (
         <Message key={message._id} message={message} />
       ))}
     </div>

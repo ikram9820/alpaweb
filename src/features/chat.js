@@ -5,8 +5,8 @@ import { apiCallBegan } from "./actions_api";
 const slice = createSlice({
   name: "chat",
   initialState: {
-    messages: [],
-    users: [],
+    messages: {},
+    users: {},
     chat: null,
     isLoading: false,
     lastFetch: null,
@@ -18,8 +18,8 @@ const slice = createSlice({
 
     chatHistoryReceived: (state, action) => {
       state.chat = action.payload.chat;
-      state.users = action.payload.users;
-      state.messages = action.payload.messages;
+      state.users[chat._id] = action.payload.users;
+      state.messages[chat._id] = action.payload.messages;
       state.isLoading = false;
     },
 
@@ -79,7 +79,7 @@ export const loadChatHistory = (chatId) => (dispatch, getState) => {
 export const addUser = (user) =>
   ioCallBegan({
     func: "emit",
-    event: "addUserTo",
+    event: "addUserToChat",
     data: user,
     onSuccess: userAdded.type,
   });
@@ -96,7 +96,7 @@ export const addMessage = (message) =>
 export const deleteUser = (userId) =>
   ioCallBegan({
     func: "emit",
-    event: "",
+    event: "deleteUserFromChat",
     data: userId,
     onSuccess: userDeleted.type,
   });
@@ -104,7 +104,7 @@ export const deleteUser = (userId) =>
 export const deleteMessage = (messageId) =>
   ioCallBegan({
     func: "emit",
-    event: "",
+    event: "deleteUserMessage",
     data: messageId,
     onSuccess: messageDeleted.type,
   });

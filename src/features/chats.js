@@ -57,10 +57,10 @@ export const loadChats = () => (dispatch, getState) => {
   );
 };
 
-export const addChat = (chat) =>
+export const createChat = (chat) =>
   ioCallBegan({
     func: "emit",
-    event: "",
+    event: "createChat",
     data: chat,
     onSuccess: chatAdded.type,
   });
@@ -68,7 +68,7 @@ export const addChat = (chat) =>
 export const deleteChat = (chat) =>
   ioCallBegan({
     func: "emit",
-    event: "",
+    event: "deleteChat",
     data: chat,
     onSuccess: chatDeleted.type,
   });
