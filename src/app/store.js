@@ -3,6 +3,7 @@ import reducer from "./reducer";
 // import logger from "./middleware/logger";
 import toast from "../features/middleware/toast";
 import api from "../features/middleware/api";
+import ioMiddelware from "../features/middleware/io";
 
 export default function () {
   return configureStore({
@@ -11,7 +12,8 @@ export default function () {
       ...getDefaultMiddleware(),
       // logger({ destination: "console" }),
       toast,
-      api
+      api,
+      ioMiddelware
     ]
   });
 }

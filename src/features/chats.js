@@ -5,7 +5,7 @@ import { apiCallBegan } from "./actions_api";
 const slice = createSlice({
   name: "chats",
   initialState: {
-    chats: [],
+    list: [],
     isLoading: false,
   },
   reducers: {
@@ -14,16 +14,16 @@ const slice = createSlice({
     },
 
     chatsReceived: (state, action) => {
-      state.chats = action.payload;
+      state.list = action.payload;
       state.isLoading = false;
     },
 
     chatAdded: (state, action) => {
-      state.chats.push(action.payload);
+      state.list.push(action.payload);
     },
 
     chatDeleted: (state, action) => {
-      state.chats = state.chats.filter(
+      state.list = state.chats.filter(
         (chat) => chat.id !== action.payload.chatId
       );
     },

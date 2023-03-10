@@ -17,7 +17,8 @@ const slice = createSlice({
     },
 
     chatHistoryReceived: (state, action) => {
-      state.chat = action.payload.chat;
+      const chat =action.payload.chat;
+      state.chat = chat
       state.users[chat._id] = action.payload.users;
       state.messages[chat._id] = action.payload.messages;
       state.isLoading = false;
@@ -84,6 +85,14 @@ export const addUser = (user) =>
     onSuccess: userAdded.type,
   });
 
+  export const deleteUser = (userId) =>
+    ioCallBegan({
+      func: "emit",
+      event: "deleteUserFromChat",
+      data: userId,
+      onSuccess: userDeleted.type,
+    });
+
 export const addMessage = (message) =>
   ioCallBegan({
     func: "emit",
@@ -92,19 +101,10 @@ export const addMessage = (message) =>
     onSuccess: messageAdded.type,
   });
 
-
-export const deleteUser = (userId) =>
-  ioCallBegan({
-    func: "emit",
-    event: "deleteUserFromChat",
-    data: userId,
-    onSuccess: userDeleted.type,
-  });
-
 export const deleteMessage = (messageId) =>
   ioCallBegan({
     func: "emit",
-    event: "deleteUserMessage",
+    event: "deleteMessage",
     data: messageId,
     onSuccess: messageDeleted.type,
   });

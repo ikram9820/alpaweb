@@ -1,26 +1,30 @@
 import { useEffect, useState } from "react";
 import ChatLog from "../components/chat/Chatlog";
 import { useSelector, useDispatch } from "react-redux";
-import { addMessage } from "../features/chat";
-import { loadChats } from "../features/chats";
+import { addMessage, addUser, deleteMessage, deleteUser } from "../features/chat";
+import { deleteChat, loadChats } from "../features/chats";
 import Chats from "../components/chat/Chats";
 export default function Home() {
 
   const [input, setInput] = useState("");
   const [chatId, setChatId] = useState("");
   const dispatch = useDispatch();
-  const chats = useSelector(state=> state.entities.chats)
+  const chats = useSelector(state=> state.entities.chats.list)
 
   
 
   useEffect(() => {
-    dispatch(loadChats);
-  },[chats,dispatch]);
+    dispatch(loadChats({data:"load chat"}));
+    dispatch(deleteChat({data:"delet chat"}));
+    dispatch(addUser({data:"add user"}));
+    dispatch(deleteUser({data:"delete user"}));
+    dispatch(deleteMessage({data:"delete message"}));
+  },[dispatch]);
 
 
   async function handleSubmit(e) {
     e.preventDefault();
-    dispatch(addMessage(data))
+    dispatch(addMessage(input))
     setInput(" ");
   }
 

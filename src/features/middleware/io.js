@@ -1,8 +1,8 @@
 import { io } from "socket.io-client";
-const socket = io("http://localhost:3900");
 import * as actions from "../actions_io";
 
-const io =
+const socket = io("http://localhost:3900");
+const ioMiddelware =
   ({ dispatch }) =>
   (next) =>
   async (action) => {
@@ -13,19 +13,14 @@ const io =
     if (onStart) dispatch({ type: onStart });
     next(action);
 
-    if (func === "on") {
-      socket.on(event, callback);
-    } else {
-      socket.emit(event, data, callback);
-    }
-
     const callback = (response) => {
-      if (response.data)
+      if (response && response.data){
         // General
         dispatch(actions.ioCallSuccess(response.data));
       // Specific
       if (onSuccess) dispatch({ type: onSuccess, payload: response.data });
-      else if (response.error) {
+      }
+      else if (response && response.error) {
         const error = response.error;
         // General
         dispatch(actions.ioCallFailed(error));
@@ -33,6 +28,11 @@ const io =
         if (onError) dispatch({ type: onError, payload: error });
       }
     };
+    if (func === "on") {
+      socket.on(event, callback);
+    } else {
+      socket.emit(event, data, callback);
+    }
   };
 
-export default io;
+export default ioMiddelware;

@@ -1,5 +1,5 @@
 import { toast as toastify } from "react-toastify";
-import * as actions from "../api";
+import * as actions from "../actions_api";
 
 const toast = store => next => action => {
   if (action.type === "error"|| action.type === actions.apiCallFailed.type) {
