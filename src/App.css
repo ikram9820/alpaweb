@@ -3,20 +3,19 @@
   display: flex;
   background-color: #282c34;
   color: white;
-  /* top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0; */
 }
 
 .asidemenu {
   width: 260px;
   padding: 8px;
+  padding-top: 0px;
+
   background-color: #202123;
 }
 
 .sidemenubutton {
   padding: 8px;
+  padding-top: 0px;
   border: 1px solid gray;
   margin-top: 8px;
   margin-bottom: 8px;
@@ -36,19 +35,21 @@
   padding-right: 12px;
 }
 
-.users {
+.chats {
   padding-top: 12px;
   padding-bottom: 12px;
-}
-
-.users select {
   width: 100%;
   padding: 5px;
   border-radius: 5px;
   font-size: 1.25em;
   outline: none;
+  text-align: left;
 }
 
+.chats:hover {
+  cursor:  pointer;
+  background-color: rgba(255, 255, 255, 0.1);
+}
 .chatbox {
   flex: 1;
   background-color: #343541;
@@ -125,4 +126,17 @@ input[type="file"] {
 }
 .file-upload-label {
   cursor: pointer;
+}
+
+.search-input {
+  background-color: #40414f;
+  width: 100%;
+  padding: 8px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  outline: none;
+  box-shadow: 0 0 8px 0, rgba(0, 0, 0, 0.25);
 }

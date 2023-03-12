@@ -1,9 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
@@ -14,16 +9,17 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Reels from "./pages/Reels";
 import Register from "./pages/Register";
-import Navbar from "./components/Navbar";
+import Navbar from "./app/navbar/Navbar";
 
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { setup } from "./socket/io";
 
 function App() {
   const user = useSelector((state) => state.entities.auth.user);
-
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
+    setup(user);
   }, [user]);
 
   return (

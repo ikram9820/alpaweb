@@ -1,8 +1,7 @@
 import classes from "./navbar.module.css";
-import Search from "./chat/Search";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout, reset } from "../features/auth";
+import { logout, reset } from "../../features/auth";
 
 function Navbar(props) {
   const dispatch = useDispatch();
@@ -15,12 +14,9 @@ function Navbar(props) {
   return (
     <>
     <div className={classes.nav}>
-      <div className="d-flex">
         <Link className={classes.logo} to="/">
           ALPA
         </Link>
-        <Search />
-      </div>
       <div className={classes.navItems}>
         {user && <Link to="/reels">Reels</Link>}
         {user && <Link to="/profile">Profile</Link>}

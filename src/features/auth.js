@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { apiCallBegan } from "./actions_api";
+import { apiCallBegan } from "./api";
 
 // Get user from localStorage
 const user = JSON.parse(localStorage.getItem("user"));

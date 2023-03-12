@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ioCallBegan } from "./actions_io";
-import { apiCallBegan } from "./actions_api";
+import { apiCallBegan } from "./api";
 
 const slice = createSlice({
   name: "chats",
@@ -18,29 +17,13 @@ const slice = createSlice({
       state.isLoading = false;
     },
 
-    chatAdded: (state, action) => {
-      state.list.push(action.payload);
-    },
-
-    chatDeleted: (state, action) => {
-      state.list = state.chats.filter(
-        (chat) => chat.id !== action.payload.chatId
-      );
-    },
-
     apiRequestFailed: (state, action) => {
       state.isLoading = false;
     },
   },
 });
 
-export const {
-  apiRequested,
-  chatsReceived,
-  chatAdded,
-  chatDeleted,
-  apiRequestFailed,
-} = slice.actions;
+export const { apiRequested, chatsReceived, apiRequestFailed } = slice.actions;
 export default slice.reducer;
 
 // Action Creators
@@ -56,19 +39,3 @@ export const loadChats = () => (dispatch, getState) => {
     })
   );
 };
-
-export const createChat = (chat) =>
-  ioCallBegan({
-    func: "emit",
-    event: "createChat",
-    data: chat,
-    onSuccess: chatAdded.type,
-  });
-
-export const deleteChat = (chat) =>
-  ioCallBegan({
-    func: "emit",
-    event: "deleteChat",
-    data: chat,
-    onSuccess: chatDeleted.type,
-  });

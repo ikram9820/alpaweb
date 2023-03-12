@@ -3,20 +3,23 @@ import { useSelector, useDispatch } from "react-redux";
 import { loadChatHistory } from "../../features/chat";
 import { useEffect } from "react";
 
-export default function ChatLog({ chatId }) {
+function ChatLog({ chatId }) {
   const dispatch = useDispatch();
-  const chatHistory = useSelector((state) => state.entities.chat.messages);
+  const chatHistory = useSelector(
+    (state) => state.entities.chat.messages[chatId]
+  );
 
   useEffect(() => {
-    if (chatId) dispatch(loadChatHistory(chatId));
-  }, [chatHistory, dispatch]);
+    dispatch(loadChatHistory(chatId));
+  }, []);
 
   return (
     <div className="chat-log">
-      {chatHistory[chatId] &&
-        chatHistory[chatId].map((message) => (
+      {chatHistory &&
+        chatHistory.map((message) => (
           <Message key={message._id} message={message} />
         ))}
     </div>
   );
 }
+export default ChatLog;

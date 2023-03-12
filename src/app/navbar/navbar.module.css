@@ -4,12 +4,13 @@
     justify-content: space-between;
     background-color: #202123;
     padding: 8px;
+    
 }
 
 .logo{
     color: white;
     padding: 14px;
-    padding-right: 5rem;
+    padding-left: 5rem;
     font-size: larger;
     text-decoration: none;
     font-weight: bold;
