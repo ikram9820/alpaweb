@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import  { addMessage } from "../../features/chat";
+import { addMessage } from "../../features/chat";
 import { joinChat } from "../../socket/io";
 import ChatLog from "./Chatlog";
 
@@ -12,6 +12,7 @@ function ChatRoom({ chatId }) {
     const message = input.trim();
     if (message && message !== "")
       dispatch(addMessage({ content: message, chatId }));
+    setInput("");
   }
 
   useEffect(() => {

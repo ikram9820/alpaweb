@@ -13,13 +13,11 @@ import Navbar from "./app/navbar/Navbar";
 
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { setup } from "./socket/io";
 
 function App() {
   const user = useSelector((state) => state.entities.auth.user);
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
-    setup(user);
   }, [user]);
 
   return (

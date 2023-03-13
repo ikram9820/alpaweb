@@ -16,6 +16,10 @@ const slice = createSlice({
       state.list = action.payload;
       state.isLoading = false;
     },
+    groupCreated: (state, action) => {
+      state.list.push(action.payload);
+      state.isLoading = false;
+    },
 
     apiRequestFailed: (state, action) => {
       state.isLoading = false;
@@ -23,7 +27,8 @@ const slice = createSlice({
   },
 });
 
-export const { apiRequested, chatsReceived, apiRequestFailed } = slice.actions;
+export const { apiRequested, chatsReceived, groupCreated, apiRequestFailed } =
+  slice.actions;
 export default slice.reducer;
 
 // Action Creators
@@ -39,3 +44,14 @@ export const loadChats = () => (dispatch, getState) => {
     })
   );
 };
+
+export const createGroup = (data) =>
+  apiCallBegan({
+    url,
+    method: "post",
+    event: "createGroup",
+    data,
+    onSuccess: groupCreated.type,
+    onStart: apiRequested.type,
+    onError: apiRequestFailed.type,
+  });

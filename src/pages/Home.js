@@ -4,7 +4,7 @@ import MyChats from "../components/chat/MyChats";
 import ChatRoom from "../components/chat/ChatRoom";
 import Starter from "../components/chat/Starter";
 import { loadChats } from "../features/chats";
-import { onMessageRecieved } from "../socket/io";
+import { onMessageRecieved,onGroupCreated} from "../socket/io";
 
 export default function Home() {
   const [chatSelected, setChatSelected] = useState(null);
@@ -15,6 +15,7 @@ export default function Home() {
   useEffect(() => {
     dispatch(loadChats());
     onMessageRecieved(dispatch);
+    onGroupCreated(dispatch)
     console.log(chatSelected);
   }, [chatSelected, dispatch]);
 

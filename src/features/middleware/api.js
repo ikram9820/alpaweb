@@ -1,5 +1,5 @@
 import axios from "axios";
-import { sendMessage } from "../../socket/io";
+import { emitEvent } from "../../socket/io";
 import * as actions from "../api";
 
 const api =
@@ -30,7 +30,7 @@ const api =
       dispatch(actions.apiCallSuccess(response.data));
       // Specific
       if (onSuccess) dispatch({ type: onSuccess, payload: response.data });
-      if (event === "sendMessage") sendMessage(response.data);
+      if (event) emitEvent(event,response.data);
     } catch (ex) {
       let error;
       if (ex.response) error = ex.response.data;
