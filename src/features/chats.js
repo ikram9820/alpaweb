@@ -32,12 +32,12 @@ export const { apiRequested, chatsReceived, groupCreated, apiRequestFailed } =
 export default slice.reducer;
 
 // Action Creators
-
+const url = "/chats"
 //only user chats
 export const loadChats = () => (dispatch, getState) => {
   return dispatch(
     apiCallBegan({
-      url: "/chats",
+      url,
       onSuccess: chatsReceived.type,
       onStart: apiRequested.type,
       onError: apiRequestFailed.type,
@@ -47,7 +47,7 @@ export const loadChats = () => (dispatch, getState) => {
 
 export const createGroup = (data) =>
   apiCallBegan({
-    url,
+    url:url+"/group",
     method: "post",
     event: "createGroup",
     data,

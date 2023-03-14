@@ -8,25 +8,26 @@ function CreateGroup() {
   const dispatch = useDispatch();
   function handleSubmit(e) {
     e.preventDefault();
-    if (groupName && groupName.trim() !== "")
+    setShowInput(!showInput);
+    if (showInput && groupName && groupName.trim() !== "")
       dispatch(createGroup({ name: groupName }));
   }
   return (
     <>
-      <div onClick={(e) => setShowInput(!showInput)} className="sidemenubutton">
-        <span className="fw-bolder fs-5">+</span>
-        Create New Group
+      <div
+        onClick={handleSubmit}
+        className="sidemenubutton text-center fw-bold "
+      >
+        {showInput && "Create"} New Group
       </div>
       {showInput && (
-        <form onSubmit={handleSubmit}>
-          <input
-            className="search-input"
-            value={groupName}
-            onChange={(e) => setGroupName(e.target.value)}
-            type="text"
-            placeholder="Search chats"
-          />
-        </form>
+        <input
+          className="search-input"
+          value={groupName}
+          onChange={(e) => setGroupName(e.target.value)}
+          type="text"
+          placeholder="Group Name"
+        />
       )}
     </>
   );

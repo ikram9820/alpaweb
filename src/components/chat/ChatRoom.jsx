@@ -20,7 +20,7 @@ function ChatRoom({ chatId }) {
   }, [chatId]);
 
   return (
-    <div>
+    <div className="">
       <ChatLog chatId={chatId} />
       <div className="chat-input-holder">
         <form onSubmit={handleSubmit}>

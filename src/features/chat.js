@@ -22,7 +22,7 @@ const slice = createSlice({
 
     messageAdded: (state, action) => {
       const chat = action.payload.chat
-      if(chat)
+      if(chat && state.messages[chat])
       state.messages[chat].push(action.payload);
     },
 

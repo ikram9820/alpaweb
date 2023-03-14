@@ -7,6 +7,9 @@ const socket = io("http://localhost:3900");
 socket.on("connected", () => {
   console.log("at:io : you are connected")
 });
+socket.on("disconnect", () => {
+  console.log("at:io : you are disconnected")
+});
 
 
 export function emitEvent(event,data) {
