@@ -1,17 +1,17 @@
-function Input({ name, value, handleInputChange, type }) {
+function Input({id, name, value,className, handleInputChange, type }) {
   return (
-    <div className="form-outline mb-3">
-      <label className="form-label text-capitalize" htmlFor={name}>
-        {name.replaceAll("_"," ")}
+    <div className="form-outline  mb-3">
+      <label className="form-label text-capitalize mb-0 me-3" htmlFor={name}>
+        {name.replaceAll("_"," ")}:
       </label>
       <input
         type={type}
-        className="form-control"
-        name={name}
+        className={className?className:"form-control"}
+        name={name&& name}
         value={value}
         onChange={(e) => handleInputChange(e)}
-        id={name}
-        placeholder={`enter ${name.replaceAll("_"," ")}...`}
+        id={name || id}
+        placeholder={name&& `enter ${name.replaceAll("_"," ")}...`}
         required
       />
     </div>

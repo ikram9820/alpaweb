@@ -26,6 +26,6 @@ function ChatLog({ chatId }) {
           <Message key={message._id} message={message} />
         ))}
     </div>
-  );
+      );
 }
 export default ChatLog;
