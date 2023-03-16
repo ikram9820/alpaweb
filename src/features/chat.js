@@ -5,6 +5,7 @@ const slice = createSlice({
   name: "chat",
   initialState: {
     messages: {},
+    chat: {},
     isLoading: false,
     lastFetch: null,
   },
@@ -15,15 +16,18 @@ const slice = createSlice({
 
     chatHistoryReceived: (state, action) => {
       const chat = action.payload.chat;
-      if(chat)
-      state.messages[chat] = action.payload.messages;
+      if (chat) {
+        state.chat = chat;
+        state.messages[chat._id] = action.payload.messages;
+      }
       state.isLoading = false;
     },
 
     messageAdded: (state, action) => {
-      const chat = action.payload.chat
-      if(chat && state.messages[chat])
-      state.messages[chat].push(action.payload);
+      const chatId = action.payload.chat;
+      if (chatId && state.messages[chatId])
+        state.messages[chatId].push(action.payload);
+      state.isLoading = false;
     },
 
     apiRequestFailed: (state, action) => {

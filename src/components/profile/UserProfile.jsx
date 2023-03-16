@@ -9,11 +9,11 @@ const UserProfile = () => {
     <div className="d-flex m-5">
       <img
         className="rounded-circle object-fit-cover"
-        src="/images/img2.jpg"
-        height={200}
-        width={200}
+        src="/images/profile.jpg"
+        height={100}
+        width={100}
       />
-      <div className="fw-semibold fs-4  ms-5 mt-3">
+      <div className="fw-semibold fs-5  ms-5 mt-3">
         <div className="d-flex mb-2">
           <span>{user && user.name}</span>
           <button
